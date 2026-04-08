@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="37b3a27a83840310060c5950ceaad3d7" label="Brand" max_length="40" name="x_1984194_everstoc_brand" type="collection">
+        <element attributes="edge_encryption_enabled=true" display="true" label="Brand Name" mandatory="true" max_length="100" name="brand_name" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Source Channel" max_length="50" name="source_channel" type="string"/>
+    </element>
+</database>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="2ab3227a83840310060c5950ceaad317" label="Order Item" max_length="40" name="x_1984194_everstoc_order_item" type="collection">
+        <element attributes="encode_utf8=false" label="Order" mandatory="true" max_length="32" name="x_1984194_everstoc_order" reference="x_1984194_everstoc_order" type="reference"/>
+        <element attributes="encode_utf8=false" display="true" label="Product" mandatory="true" max_length="32" name="x_1984194_everstoc_product" reference="x_1984194_everstoc_product" type="reference"/>
+        <element label="Quantity" mandatory="true" max_length="40" name="quantity" type="integer"/>
+        <element label="Unit Price" mandatory="true" max_length="20" name="unit_price" type="decimal"/>
+        <index name="index">
+            <element name="x_1984194_everstoc_order"/>
+        </index>
+        <index name="index2">
+            <element name="x_1984194_everstoc_product"/>
+        </index>
+    </element>
+</database>

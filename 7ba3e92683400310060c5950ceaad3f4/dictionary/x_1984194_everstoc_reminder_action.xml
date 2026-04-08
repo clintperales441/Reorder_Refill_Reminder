@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="deb3ee3a83840310060c5950ceaad3b7" label="Reminder Action" max_length="40" name="x_1984194_everstoc_reminder_action" type="collection">
+        <element attributes="edge_encryption_enabled=true" choice="3" display="true" label="Action Type" mandatory="true" max_length="50" name="action_type" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Postponed" sequence="0" value="postponed"/>
+                <element inactive_on_update="false" label="Snooze" sequence="4" value="snooze"/>
+                <element inactive_on_update="false" label="Dismissed" sequence="1" value="dismissed"/>
+                <element inactive_on_update="false" label="Completed" sequence="2" value="completed"/>
+                <element inactive_on_update="false" label="Ordered" sequence="3" value="ordered"/>
+            </choice>
+        </element>
+        <element attributes="encode_utf8=false" label="Reminder" mandatory="true" max_length="32" name="x_1984194_everstoc_reminder" reference="x_1984194_everstoc_reminder" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Postponed Until" max_length="40" name="postponed_until" type="glide_date"/>
+        <element attributes="edge_encryption_enabled=true" default="javascript:gs.nowDateTime()" label="Action Date" mandatory="true" max_length="40" name="action_date" type="glide_date"/>
+        <element attributes="encode_utf8=false" label="User" mandatory="true" max_length="32" name="sys_user" reference="sys_user" type="reference"/>
+        <index name="index">
+            <element name="sys_user"/>
+        </index>
+        <index name="index2">
+            <element name="x_1984194_everstoc_reminder"/>
+        </index>
+    </element>
+</database>

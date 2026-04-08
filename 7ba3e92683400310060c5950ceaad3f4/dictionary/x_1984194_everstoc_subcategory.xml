@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="2fb3a27a83840310060c5950ceaad3ad" label="Subcategory" max_length="40" name="x_1984194_everstoc_subcategory" type="collection">
+        <element attributes="encode_utf8=false" label="Category" mandatory="true" max_length="32" name="x_1984194_everstoc_category" reference="x_1984194_everstoc_category" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" display="true" label="Subcategory Name" mandatory="true" max_length="100" name="subcategory_name" type="string"/>
+        <index name="index">
+            <element name="x_1984194_everstoc_category"/>
+        </index>
+    </element>
+</database>

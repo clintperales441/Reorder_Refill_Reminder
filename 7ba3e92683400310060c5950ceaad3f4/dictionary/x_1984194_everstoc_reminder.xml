@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="a3b3a27a83840310060c5950ceaad33e" label="Reminder" max_length="40" name="x_1984194_everstoc_reminder" type="collection">
+        <element attributes="encode_utf8=false" label="User" mandatory="true" max_length="32" name="sys_user" reference="sys_user" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Last Triggered Date" max_length="40" name="last_triggered_date" type="glide_date"/>
+        <element attributes="encode_utf8=false" display="true" label="Product" mandatory="true" max_length="32" name="x_1984194_everstoc_product" reference="x_1984194_everstoc_product" type="reference"/>
+        <element choice="3" default="1" label="State" max_length="40" name="state" type="integer">
+            <choice>
+                <element inactive_on_update="false" label="Paused" sequence="1" value="2"/>
+                <element inactive_on_update="false" label="Cancelled" sequence="2" value="3"/>
+                <element inactive_on_update="false" label="Completed" sequence="3" value="4"/>
+                <element inactive_on_update="false" label="Active" sequence="0" value="1"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" choice="3" label="Reminder Frequency" mandatory="true" max_length="50" name="reminder_frequency" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Monthly" sequence="3" value="monthly"/>
+                <element inactive_on_update="false" label="Daily" sequence="0" value="daily"/>
+                <element inactive_on_update="false" label="Quarterly" sequence="4" value="quarterly"/>
+                <element inactive_on_update="false" label="Weekly" sequence="1" value="weekly"/>
+                <element inactive_on_update="false" label="Custom" sequence="5" value="custom"/>
+                <element inactive_on_update="false" label="Bi-weekly" sequence="2" value="biweekly"/>
+            </choice>
+        </element>
+        <element attributes="encode_utf8=false" label="Assigned To" max_length="32" name="assigned_to" reference="sys_user" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Next Reminder Date" mandatory="true" max_length="40" name="next_reminder_date" type="glide_date"/>
+        <index name="index">
+            <element name="assigned_to"/>
+        </index>
+        <index name="index2">
+            <element name="sys_user"/>
+        </index>
+        <index name="index3">
+            <element name="x_1984194_everstoc_product"/>
+        </index>
+    </element>
+</database>

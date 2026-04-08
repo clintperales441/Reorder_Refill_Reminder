@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="72b3227a83840310060c5950ceaad36c" label="AI Recommendation" max_length="40" name="x_1984194_everstoc_ai_recommendation" type="collection">
+        <element label="Confidence Score" mandatory="true" max_length="20" name="confidence_score" type="decimal"/>
+        <element attributes="encode_utf8=false" label="User" mandatory="true" max_length="32" name="sys_user" reference="sys_user" type="reference"/>
+        <element attributes="encode_utf8=false" label="Product" mandatory="true" max_length="32" name="x_1984194_everstoc_product" reference="x_1984194_everstoc_product" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" choice="3" display="true" label="Suggestion Type" mandatory="true" max_length="100" name="suggestion_type" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Seasonal Item" sequence="3" value="seasonal_item"/>
+                <element inactive_on_update="false" label="Reorder Soon" sequence="0" value="reorder_soon"/>
+                <element inactive_on_update="false" label="Trending Product" sequence="4" value="trending_product"/>
+                <element inactive_on_update="false" label="Bulk Discount" sequence="1" value="bulk_discount"/>
+                <element inactive_on_update="false" label="Cost Savings" sequence="5" value="cost_savings"/>
+                <element inactive_on_update="false" label="Alternative Product" sequence="2" value="alternative_product"/>
+            </choice>
+        </element>
+        <index name="index">
+            <element name="sys_user"/>
+        </index>
+        <index name="index2">
+            <element name="x_1984194_everstoc_product"/>
+        </index>
+    </element>
+</database>
