@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="5bb3627a83840310060c5950ceaad377" label="User Address" max_length="40" name="x_1984194_everstoc_user_address" type="collection">
+        <element label="Default Address" max_length="40" name="is_default" type="boolean"/>
+        <element attributes="encode_utf8=false" label="User" mandatory="true" max_length="32" name="sys_user" reference="sys_user" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" display="true" label="Address Label" mandatory="true" max_length="100" name="label" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Full Address" mandatory="true" max_length="500" name="full_address" type="string"/>
+        <index name="index">
+            <element name="sys_user"/>
+        </index>
+    </element>
+</database>

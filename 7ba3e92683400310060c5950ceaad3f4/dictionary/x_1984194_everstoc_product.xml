@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="9fb3627a83840310060c5950ceaad3ef" label="Product" max_length="40" name="x_1984194_everstoc_product" type="collection">
+        <element attributes="encode_utf8=false" label="Subcategory" mandatory="true" max_length="32" name="x_1984194_everstoc_subcategory" reference="x_1984194_everstoc_subcategory" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Weight" max_length="50" name="weight" type="string"/>
+        <element attributes="edge_encryption_enabled=true" display="true" label="Product Name" mandatory="true" max_length="200" name="product_name" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Pack Type" max_length="100" name="pack_type" type="string"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Stock Unit" max_length="50" name="stock_unit" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Box" sequence="3" value="box"/>
+                <element inactive_on_update="false" label="Gallon" sequence="7" value="gallon"/>
+                <element inactive_on_update="false" label="Each" sequence="0" value="each"/>
+                <element inactive_on_update="false" label="Kilogram" sequence="4" value="kg"/>
+                <element inactive_on_update="false" label="Pack" sequence="1" value="pack"/>
+                <element inactive_on_update="false" label="Pound" sequence="5" value="lb"/>
+                <element inactive_on_update="false" label="Case" sequence="2" value="case"/>
+                <element inactive_on_update="false" label="Liter" sequence="6" value="liter"/>
+            </choice>
+        </element>
+        <element default="30" label="Default Reorder Days" max_length="40" name="default_reorder_days" type="integer"/>
+        <element attributes="encode_utf8=false" label="Brand" mandatory="true" max_length="32" name="x_1984194_everstoc_brand" reference="x_1984194_everstoc_brand" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Size" max_length="50" name="size" type="string"/>
+        <element label="Price" mandatory="true" max_length="20" name="price" type="decimal"/>
+        <index name="index">
+            <element name="x_1984194_everstoc_brand"/>
+        </index>
+        <index name="index2">
+            <element name="x_1984194_everstoc_subcategory"/>
+        </index>
+    </element>
+</database>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_module">
+    <sys_module action="INSERT_OR_UPDATE">
+        <content><![CDATA[{
+  "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "version": 1,
+  "serialNumber": "urn:uuid:ecdd117c-a7f5-409d-9bb5-6e45328ab1de",
+  "metadata": {
+    "timestamp": "2026-04-08T14:34:52.001Z",
+    "tools": {
+      "components": [
+        {
+          "type": "library",
+          "name": "sdk-build-plugins",
+          "group": "@servicenow",
+          "version": "4.5.0",
+          "author": "ServiceNow"
+        }
+      ]
+    },
+    "component": {
+      "type": "application",
+      "name": "x-1984194-ever-stock",
+      "version": "1.0.0",
+      "bom-ref": "pkg:servicenow/x-1984194-ever-stock@1.0.0?sys_scope_id=7ba3e92683400310060c5950ceaad3f4",
+      "description": "People forget to restock essentials (water jugs, pet food, diapers). Provide opt‑in cadence, low‑friction skip/postpone, and smart suggestions based on order history.",
+      "licenses": [
+        {
+          "license": {
+            "name": "UNLICENSED"
+          }
+        }
+      ],
+      "purl": "pkg:servicenow/x-1984194-ever-stock@1.0.0?sys_scope_id=7ba3e92683400310060c5950ceaad3f4"
+    }
+  },
+  "components": [],
+  "dependencies": [
+    {
+      "ref": "pkg:servicenow/x-1984194-ever-stock@1.0.0?sys_scope_id=7ba3e92683400310060c5950ceaad3f4"
+    }
+  ]
+}]]></content>
+        <external_source>false</external_source>
+        <path>x_1984194_everstoc/x-1984194-ever-stock/1.0.0/bom.json</path>
+        <sys_class_name>sys_module</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-04-08 14:11:03</sys_created_on>
+        <sys_id>083bf828d3784c3c9ee9789ae27884b9</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_1984194_everstoc/x-1984194-ever-stock/1.0.0/bom.json</sys_name>
+        <sys_package display_value="EverStock" source="x_1984194_everstoc">7ba3e92683400310060c5950ceaad3f4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="EverStock">7ba3e92683400310060c5950ceaad3f4</sys_scope>
+        <sys_update_name>sys_module_083bf828d3784c3c9ee9789ae27884b9</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-04-08 14:11:03</sys_updated_on>
+    </sys_module>
+</record_update>

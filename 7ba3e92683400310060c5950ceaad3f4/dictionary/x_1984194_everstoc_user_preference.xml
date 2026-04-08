@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="cfb3227a83840310060c5950ceaad3e6" label="User Preference" max_length="40" name="x_1984194_everstoc_user_preference" type="collection">
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Default Frequency" max_length="50" name="default_frequency" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Custom" sequence="4" value="custom"/>
+                <element inactive_on_update="false" label="Daily" sequence="0" value="daily"/>
+                <element inactive_on_update="false" label="Weekly" sequence="1" value="weekly"/>
+                <element inactive_on_update="false" label="Bi-weekly" sequence="2" value="biweekly"/>
+                <element inactive_on_update="false" label="Monthly" sequence="3" value="monthly"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Preferred Channel" max_length="50" name="preferred_channel" type="string">
+            <choice>
+                <element inactive_on_update="false" label="Push Notification" sequence="2" value="push"/>
+                <element inactive_on_update="false" label="In-App" sequence="3" value="in_app"/>
+                <element inactive_on_update="false" label="Email" sequence="0" value="email"/>
+                <element inactive_on_update="false" label="SMS" sequence="1" value="sms"/>
+            </choice>
+        </element>
+        <element default="true" label="Opt-in Reminders" max_length="40" name="opt_in_reminders" type="boolean"/>
+        <element attributes="encode_utf8=false" display="true" label="User" mandatory="true" max_length="32" name="sys_user" reference="sys_user" type="reference"/>
+        <index name="index">
+            <element name="sys_user"/>
+        </index>
+    </element>
+</database>

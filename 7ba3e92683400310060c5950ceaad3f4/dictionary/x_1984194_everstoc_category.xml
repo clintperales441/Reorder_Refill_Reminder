@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="17b3627a83840310060c5950ceaad3bf" label="Category" max_length="40" name="x_1984194_everstoc_category" type="collection">
+        <element attributes="edge_encryption_enabled=true" display="true" label="Category Name" mandatory="true" max_length="100" name="category_name" type="string"/>
+    </element>
+</database>
