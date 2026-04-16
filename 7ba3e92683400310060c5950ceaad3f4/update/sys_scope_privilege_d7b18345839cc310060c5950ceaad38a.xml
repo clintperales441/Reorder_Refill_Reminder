@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_scope_privilege">
+    <sys_scope_privilege action="INSERT_OR_UPDATE">
+        <operation>execute</operation>
+        <source_scope display_value="EverStock">7ba3e92683400310060c5950ceaad3f4</source_scope>
+        <status>allowed</status>
+        <sys_class_name>sys_scope_privilege</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2026-04-15 16:08:23</sys_created_on>
+        <sys_id>d7b18345839cc310060c5950ceaad38a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>GlideRecord.insert</sys_name>
+        <sys_package display_value="EverStock" source="x_1984194_everstoc">7ba3e92683400310060c5950ceaad3f4</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="EverStock">7ba3e92683400310060c5950ceaad3f4</sys_scope>
+        <sys_update_name>sys_scope_privilege_d7b18345839cc310060c5950ceaad38a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2026-04-15 16:08:23</sys_updated_on>
+        <target_name>GlideRecord.insert</target_name>
+        <target_scope display_value="Global">global</target_scope>
+        <target_type>scriptable</target_type>
+    </sys_scope_privilege>
+</record_update>
