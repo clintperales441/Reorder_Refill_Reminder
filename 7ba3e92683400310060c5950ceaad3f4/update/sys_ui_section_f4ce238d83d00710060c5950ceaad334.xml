@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="" section_id="f4ce238d83d00710060c5950ceaad334" sys_domain="global" table="x_1984194_everstoc_category" version="3" view="">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>category_name</element>
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-04-15 19:25:05</sys_created_on>
+            <sys_id>3cce278d83d00710060c5950ceaad307</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1984194_everstoc_category" sys_domain="global" view="Default view">f4ce238d83d00710060c5950ceaad334</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-04-15 19:25:05</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption/>
+            <header>false</header>
+            <name>x_1984194_everstoc_category</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2026-04-15 19:25:05</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>f4ce238d83d00710060c5950ceaad334</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_1984194_everstoc_category</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="EverStock" source="x_1984194_everstoc">7ba3e92683400310060c5950ceaad3f4</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="EverStock">7ba3e92683400310060c5950ceaad3f4</sys_scope>
+            <sys_update_name>sys_ui_section_f4ce238d83d00710060c5950ceaad334</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2026-04-15 19:25:05</sys_updated_on>
+            <sys_user/>
+            <title>true</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>
