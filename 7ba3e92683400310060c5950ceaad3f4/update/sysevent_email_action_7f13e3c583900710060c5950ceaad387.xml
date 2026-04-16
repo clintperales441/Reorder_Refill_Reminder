@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sysevent_email_action">
     <sysevent_email_action action="INSERT_OR_UPDATE">
         <action_insert>false</action_insert>
-        <action_update>true</action_update>
+        <action_update>false</action_update>
         <active>true</active>
         <advanced_condition/>
         <affected_field_on_event/>
         <category display_value="Uncategorized" name="Uncategorized">c97d83137f4432005f58108c3ffa917a</category>
         <collection>x_1984194_everstoc_reminder</collection>
-        <condition table="x_1984194_everstoc_reminder">stateCHANGESTO4^EQ<item display_value="Completed" endquery="false" field="state" goto="false" newquery="false" operator="CHANGESTO" or="false" value="4"/>
-            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
-        </condition>
+        <condition table="x_1984194_everstoc_reminder"/>
         <content_type>text/html</content_type>
         <default_digest>false</default_digest>
         <default_interval/>
@@ -27,13 +25,13 @@
         <digest_type>single</digest_type>
         <digestable>false</digestable>
         <enable_dynamic_translation>false</enable_dynamic_translation>
-        <event_name>activate.life.cycle.migration</event_name>
+        <event_name>x_1984194_everstoc.reminder_due</event_name>
         <event_parm_1>false</event_parm_1>
         <event_parm_2>false</event_parm_2>
         <exclude_delegates>false</exclude_delegates>
         <force_delivery>false</force_delivery>
         <from/>
-        <generation_type>engine</generation_type>
+        <generation_type>event</generation_type>
         <importance/>
         <include_attachments>false</include_attachments>
         <item>event.parm1</item>
@@ -43,7 +41,7 @@
         <message_html><![CDATA[<p>Dear ${user.name},</p>
 <p>Good day.</p>
 <p>This is a friendly reminder regarding the following product associated with your recent order:</p>
-<p>Product: ${product}<br>Scheduled Reminder Date: ${next_reminder_date}</p>
+<p>Product: ${x_1984194_everstoc_product}<br>Scheduled Reminder Date: ${next_reminder_date}</p>
 <p>Please take the necessary action at your earliest convenience. If you have already addressed this matter, kindly disregard this message.</p>
 <p>Should you require any assistance or further clarification, feel free to reach out.</p>
 <p>Thank you for your time and attention.</p>
