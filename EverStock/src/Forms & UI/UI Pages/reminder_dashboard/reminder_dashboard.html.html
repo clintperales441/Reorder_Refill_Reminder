@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>EverStock Reminder Dashboard</title>
+    <style>
+      :root {
+        --bg: #f3f5f7;
+        --card: #ffffff;
+        --text: #0f1720;
+        --muted: #5b6b79;
+        --line: #d8e0e8;
+        --brand: #125f4b;
+        --brand-soft: #e7f3ef;
+        --warn: #9a3412;
+        --danger: #8b1e2a;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        font-family: Segoe UI, Helvetica Neue, Arial, sans-serif;
+        background: radial-gradient(circle at top right, #dde8ff 0%, var(--bg) 45%), var(--bg);
+        color: var(--text);
+      }
+
+      .page {
+        max-width: 1100px;
+        margin: 32px auto;
+        padding: 0 16px 32px;
+      }
+
+      .hero {
+        background: linear-gradient(135deg, #0f493a, #125f4b);
+        color: #fff;
+        border-radius: 14px;
+        padding: 22px;
+        box-shadow: 0 10px 30px rgba(18, 95, 75, 0.25);
+      }
+
+      .hero h1 {
+        margin: 0;
+        font-size: 32px;
+        font-weight: 700;
+      }
+
+      .hero p {
+        margin: 8px 0 0;
+        color: #d7ece5;
+      }
+
+      .layout {
+        margin-top: 18px;
+        display: grid;
+        grid-template-columns: 320px 1fr;
+        gap: 16px;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 16px;
+      }
+
+      .card h2 {
+        margin: 0 0 12px;
+        font-size: 18px;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .stack {
+        display: grid;
+        gap: 12px;
+      }
+
+      button {
+        border: 1px solid #0f4f3e;
+        background: var(--brand);
+        color: #fff;
+        font-weight: 600;
+        border-radius: 8px;
+        padding: 8px 12px;
+        cursor: pointer;
+      }
+
+      button.secondary {
+        background: #fff;
+        color: var(--brand);
+      }
+
+      button.warn {
+        border-color: #c2410c;
+        color: #fff;
+        background: var(--warn);
+      }
+
+      button.danger {
+        border-color: #991b1b;
+        color: #fff;
+        background: var(--danger);
+      }
+
+      button:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+      }
+
+      .msg {
+        margin-top: 10px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th, td {
+        border-bottom: 1px solid var(--line);
+        padding: 10px 8px;
+        text-align: left;
+        vertical-align: middle;
+        font-size: 14px;
+      }
+
+      th {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: #627484;
+      }
+
+      .badge {
+        display: inline-block;
+        border-radius: 999px;
+        font-size: 12px;
+        padding: 4px 8px;
+        background: #edf2f7;
+        color: #304355;
+      }
+
+      .state-1 { background: #e7f7ef; color: #155e3a; }
+      .state-2 { background: #fff4dc; color: #8c5a00; }
+      .state-3 { background: #fee8ea; color: #9f1239; }
+      .state-4 { background: #e8edf2; color: #374151; }
+
+      .row-actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      @media (max-width: 900px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+
+        .row-actions {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="hero">
+        <h1>EverStock Reorder Manager</h1>
+        <p>MVP Flow: Order -> Reminder -> Notification -> Action</p>
+      </div>
+
+      <div class="layout">
+        <div class="stack">
+          <div class="card">
+            <h2>Demo Order</h2>
+            <p class="muted">Creates an active reminder for your user with the first available product.</p>
+            <button id="btn-place-order">Place Demo Order</button>
+            <div class="msg" id="order-msg"></div>
+          </div>
+
+          <div class="card">
+            <h2>Quick Refresh</h2>
+            <p class="muted">Reload reminders and recent notifications from live records.</p>
+            <button class="secondary" id="btn-refresh">Refresh Dashboard</button>
+            <div class="msg" id="refresh-msg"></div>
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="card">
+            <h2>My Reminders</h2>
+            <div id="reminders-wrap" class="muted">Loading reminders...</div>
+          </div>
+
+          <div class="card">
+            <h2>Recent Notifications</h2>
+            <div id="notifications-wrap" class="muted">Loading notifications...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        var API_BASE = '/api/now/table';
+        var AMP = String.fromCharCode(38);
+
+        function resolveCsrfToken() {
+          if (globalThis.g_ck) {
+            return String(globalThis.g_ck);
+          }
+
+          if (globalThis.NOW) {
+            if (globalThis.NOW.g_ck) {
+              return String(globalThis.NOW.g_ck);
+            }
+          }
+
+          return '';
+        }
+
+        var csrfToken = resolveCsrfToken();
+
+        function resolveCurrentUserId() {
+          if (globalThis.g_user) {
+            if (globalThis.g_user.userID) {
+              return String(globalThis.g_user.userID);
+            }
+          }
+
+          if (globalThis.NOW) {
+            if (globalThis.NOW.user) {
+              if (globalThis.NOW.user.userID) {
+                return String(globalThis.NOW.user.userID);
+              }
+            }
+          }
+
+          return '';
+        }
+
+        var currentUserId = resolveCurrentUserId();
+
+        var stateLabel = {
+          '1': 'Active',
+          '2': 'Paused',
+          '3': 'Cancelled',
+          '4': 'Completed'
+        };
+
+        function byId(id) {
+          return document.getElementById(id);
+        }
+
+        function asDisplay(field) {
+          if (!field) {
+            return '';
+          }
+          if (typeof field === 'string') {
+            return field;
+          }
+          return field.display_value || field.value || '';
+        }
+
+        function asValue(field) {
+          if (!field) {
+            return '';
+          }
+          if (typeof field === 'string') {
+            return field;
+          }
+          return field.value || field.display_value || '';
+        }
+
+        function setMsg(id, text) {
+          var el = byId(id);
+          if (el) {
+            el.textContent = text;
+          }
+        }
+
+        function toServiceNowDateTime(jsDate) {
+          var y = jsDate.getUTCFullYear();
+          var m = String(jsDate.getUTCMonth() + 1).padStart(2, '0');
+          var d = String(jsDate.getUTCDate()).padStart(2, '0');
+          var h = String(jsDate.getUTCHours()).padStart(2, '0');
+          var min = String(jsDate.getUTCMinutes()).padStart(2, '0');
+          var s = String(jsDate.getUTCSeconds()).padStart(2, '0');
+          return y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s;
+        }
+
+        function callApi(method, path, body) {
+          if (!globalThis.fetch) {
+            return Promise.reject(new Error('Browser fetch API is unavailable in this session.'));
+          }
+
+          var headers = {
+            Accept: 'application/json',
+            'X-UserToken': csrfToken
+          };
+
+          if (body) {
+            headers['Content-Type'] = 'application/json';
+          }
+
+          return fetch(path, {
+            method: method,
+            headers: headers,
+            body: body ? JSON.stringify(body) : undefined,
+            credentials: 'same-origin'
+          })
+            .then(function (response) {
+              return response.json().catch(function () {
+                return {};
+              }).then(function (payload) {
+                if (!response.ok) {
+                  var errorMessage = '';
+                  if (payload.error) {
+                    errorMessage = payload.error.message || '';
+                  }
+
+                  var message = errorMessage || response.status + ' request failed';
+                  throw new Error(message);
+                }
+                return payload;
+              });
+            });
+        }
+
+        function renderReminders(reminders) {
+          var wrap = byId('reminders-wrap');
+          if (!wrap) {
+            return;
+          }
+
+          if (!reminders.length) {
+            wrap.innerHTML = '<div class="muted">No reminders yet. Use "Place Demo Order" to create one.</div>';
+            return;
+          }
+
+          var rows = reminders
+            .map(function (r) {
+              var reminderId = asValue(r.sys_id);
+              var state = asValue(r.state);
+              var canAct = state === '1';
+              var product = asDisplay(r.x_1984194_everstoc_product) || '(No product)';
+              var nextDate = asDisplay(r.next_reminder_date) || '-';
+              var freq = asDisplay(r.reminder_frequency) || '-';
+              var label = stateLabel[state] || state || '-';
+
+              return (
+                '<tr>' +
+                '<td>' + product + '</td>' +
+                '<td>' + freq + '</td>' +
+                '<td>' + nextDate + '</td>' +
+                '<td><span class="badge state-' + state + '">' + label + '</span></td>' +
+                '<td>' +
+                (canAct
+                  ? '<div class="row-actions">' +
+                    '<button class="warn" data-action="postpone" data-id="' + reminderId + '">Postpone 3 Days</button>' +
+                    '<button class="danger" data-action="skip" data-id="' + reminderId + '">Skip</button>' +
+                    '</div>'
+                  : '<span class="muted">No actions</span>') +
+                '</td>' +
+                '</tr>'
+              );
+            })
+            .join('');
+
+          wrap.innerHTML =
+            '<table>' +
+            '<thead><tr><th>Product</th><th>Frequency</th><th>Next Reminder</th><th>Status</th><th>Actions</th></tr></thead>' +
+            '<tbody>' + rows + '</tbody>' +
+            '</table>';
+
+          wrap.querySelectorAll('button[data-action]').forEach(function (btn) {
+            btn.addEventListener('click', onReminderActionClick);
+          });
+        }
+
+        function renderNotifications(records) {
+          var wrap = byId('notifications-wrap');
+          if (!wrap) {
+            return;
+          }
+
+          if (!records.length) {
+            wrap.innerHTML = '<div class="muted">No notifications yet.</div>';
+            return;
+          }
+
+          var rows = records
+            .map(function (n) {
+              var sentAt = asDisplay(n.sent_at) || asDisplay(n.sys_created_on) || '-';
+              var channel = asDisplay(n.channel) || '-';
+              var msg = asDisplay(n.message) || '-';
+
+              return (
+                '<tr>' +
+                '<td>' + sentAt + '</td>' +
+                '<td>' + channel + '</td>' +
+                '<td>' + msg + '</td>' +
+                '</tr>'
+              );
+            })
+            .join('');
+
+          wrap.innerHTML =
+            '<table>' +
+            '<thead><tr><th>Sent At</th><th>Channel</th><th>Message</th></tr></thead>' +
+            '<tbody>' + rows + '</tbody>' +
+            '</table>';
+        }
+
+        function loadReminders() {
+          var query = encodeURIComponent('sys_user=' + currentUserId + '^ORDERBYDESCsys_created_on');
+          var fields = [
+            'sys_id',
+            'x_1984194_everstoc_product',
+            'reminder_frequency',
+            'next_reminder_date',
+            'state'
+          ].join(',');
+
+          var path =
+            API_BASE +
+            '/x_1984194_everstoc_reminder?sysparm_display_value=all' +
+            AMP +
+            'sysparm_limit=30' +
+            AMP +
+            'sysparm_fields=' +
+            encodeURIComponent(fields) +
+            AMP +
+            'sysparm_query=' +
+            query;
+
+          return callApi('GET', path).then(function (data) {
+            renderReminders((data ? data.result : null) || []);
+          });
+        }
+
+        function loadNotifications() {
+          var query = encodeURIComponent('sys_user=' + currentUserId + '^ORDERBYDESCsys_created_on');
+          var fields = ['sent_at', 'sys_created_on', 'channel', 'message'].join(',');
+          var path =
+            API_BASE +
+            '/x_1984194_everstoc_notification?sysparm_display_value=all' +
+            AMP +
+            'sysparm_limit=10' +
+            AMP +
+            'sysparm_fields=' +
+            encodeURIComponent(fields) +
+            AMP +
+            'sysparm_query=' +
+            query;
+
+          return callApi('GET', path).then(function (data) {
+            renderNotifications((data ? data.result : null) || []);
+          });
+        }
+
+        function findAnyProduct() {
+          var path =
+            API_BASE +
+            '/x_1984194_everstoc_product?sysparm_display_value=all' +
+            AMP +
+            'sysparm_fields=sys_id,product_name' +
+            AMP +
+            'sysparm_limit=1' +
+            AMP +
+            'sysparm_query=' +
+            encodeURIComponent('ORDERBYsys_created_on');
+
+          return callApi('GET', path).then(function (data) {
+            var records = (data ? data.result : null) || [];
+            if (!records.length) {
+              throw new Error('No products found. Create at least one product first.');
+            }
+            return records[0];
+          });
+        }
+
+        function placeDemoOrder() {
+          var btn = byId('btn-place-order');
+          if (!btn) {
+            return;
+          }
+
+          btn.disabled = true;
+          setMsg('order-msg', 'Creating reminder...');
+
+          findAnyProduct()
+            .then(function (product) {
+              var productId = asValue(product.sys_id);
+              var nextDate = toServiceNowDateTime(new Date());
+
+              return callApi('POST', API_BASE + '/x_1984194_everstoc_reminder', {
+                sys_user: currentUserId,
+                x_1984194_everstoc_product: productId,
+                reminder_frequency: 'weekly',
+                next_reminder_date: nextDate,
+                state: '1'
+              });
+            })
+            .then(function () {
+              setMsg('order-msg', 'Demo order placed. Reminder created successfully.');
+              return refreshAll('Dashboard refreshed.');
+            })
+            .catch(function (e) {
+              setMsg('order-msg', 'Failed: ' + e.message);
+            })
+            .finally(function () {
+              btn.disabled = false;
+            });
+        }
+
+        function updateReminder(reminderId, patchBody) {
+          return callApi('PATCH', API_BASE + '/x_1984194_everstoc_reminder/' + reminderId, patchBody);
+        }
+
+        function onReminderActionClick(event) {
+          var btn = event.currentTarget;
+          var action = btn.getAttribute('data-action');
+          var reminderId = btn.getAttribute('data-id');
+
+          if (!action || !reminderId) {
+            return;
+          }
+
+          btn.disabled = true;
+          setMsg('refresh-msg', 'Applying action...');
+
+          var actionPromise;
+          if (action === 'postpone') {
+            var date = new Date();
+            date.setUTCDate(date.getUTCDate() + 3);
+            actionPromise = updateReminder(reminderId, {
+              next_reminder_date: toServiceNowDateTime(date),
+              state: '1'
+            });
+          } else if (action === 'skip') {
+            actionPromise = updateReminder(reminderId, {
+              state: '3'
+            });
+          } else {
+            actionPromise = Promise.resolve();
+          }
+
+          actionPromise
+            .then(function () {
+              return refreshAll('Action completed.');
+            })
+            .catch(function (e) {
+              setMsg('refresh-msg', 'Action failed: ' + e.message);
+            })
+            .finally(function () {
+              btn.disabled = false;
+            });
+        }
+
+        function refreshAll(message) {
+          return Promise.all([loadReminders(), loadNotifications()]).then(function () {
+            setMsg('refresh-msg', message || 'Loaded.');
+          });
+        }
+
+        function wireEvents() {
+          var orderBtn = byId('btn-place-order');
+          var refreshBtn = byId('btn-refresh');
+
+          if (orderBtn) {
+            orderBtn.addEventListener('click', placeDemoOrder);
+          }
+
+          if (refreshBtn) {
+            refreshBtn.addEventListener('click', function () {
+              refreshAll('Dashboard refreshed.').catch(function (e) {
+                setMsg('refresh-msg', 'Refresh failed: ' + e.message);
+              });
+            });
+          }
+        }
+
+        function init() {
+          if (!currentUserId) {
+            setMsg('refresh-msg', 'Unable to detect current user session.');
+            return;
+          }
+
+          wireEvents();
+          refreshAll('Loaded.').catch(function (e) {
+            setMsg('refresh-msg', 'Initial load failed: ' + e.message);
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', init);
+        } else {
+          init();
+        }
+      })();
+    </script>
+  </body>
+</html>

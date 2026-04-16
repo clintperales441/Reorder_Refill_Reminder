@@ -1,0 +1,781 @@
+{
+  "system": {
+    "sys_user_role": true,
+    "agent_assist_recommendation": true,
+    "asmt_metric": true,
+    "asmt_signature": true,
+    "sys_atf_step_config": true,
+    "sys_atf_step": true,
+    "sys_client_extension_point": true,
+    "sys_script_client": true,
+    "dl_u_priority": true,
+    "sys_ui_extension_point": true,
+    "sys_ui_policy": true,
+    "sys_ui_script": true,
+    "connect_action": true,
+    "content_block": true,
+    "content_block_detail": true,
+    "content_block_programmatic": true,
+    "content_block_static": true,
+    "content_css": true,
+    "cxs_table_config": true,
+    "sys_relationship": true,
+    "sys_db_object": true,
+    "sys_email_client_template": true,
+    "sys_email_canned_message": true,
+    "sys_recipient_qualifier": true,
+    "sys_ui_context_menu": true,
+    "sys_embedded_help_content": true,
+    "sys_ui_list_control": true,
+    "cmn_map_page": true,
+    "cmn_schedule_page": true,
+    "sys_ui_style": true,
+    "cmn_timeline_page": true,
+    "sys_ui_macro": true,
+    "sys_ui_page": true,
+    "sysrule_view": true,
+    "sys_embedded_tour_step": true,
+    "scheduled_data_import": true,
+    "sys_ws_operation": true,
+    "sys_web_service": true,
+    "sys_transform_map": true,
+    "mid_selector_override": true,
+    "ecc_agent_capability": true,
+    "ecc_agent_capability_value_test": true,
+    "ecc_agent_property": true,
+    "ecc_agent_script_include": true,
+    "sys_script_ajax": true,
+    "process_step_approval": true,
+    "bsm_action": true,
+    "ci_identifier": true,
+    "discovery_classy": true,
+    "clone_cleanup_script": true,
+    "csm_field_map": true,
+    "csm_table_map": true,
+    "sys_declarative_action_assignment": true,
+    "diagrammer_action": true,
+    "sys_dictionary": true,
+    "discovery_port_probe": true,
+    "sys_ui_title": true,
+    "sys_transform_entry": true,
+    "sys_impex_map": true,
+    "sys_installation_exit": true,
+    "sys_ui_list_script_client": true,
+    "sys_ui_list_script_server": true,
+    "live_table_notification": true,
+    "mtg_definition": true,
+    "sys_navigator": true,
+    "sys_nav_link": true,
+    "pwd_cred_store": true,
+    "pwd_extension_type": true,
+    "discovery_probes": true,
+    "expert_panel_template": true,
+    "sysauto_query_builder": true,
+    "sysauto": true,
+    "sys_service_api": true,
+    "sysevent_email_style": true,
+    "chg_soc_style_rule_core": true,
+    "sys_listener_detail": true,
+    "sys_transform_script": true,
+    "item_option_new": true,
+    "sys_home": true,
+    "expert_panel_transition": true,
+    "expert_panel": true,
+    "expert_ui_policy": true,
+    "sys_app_module": true,
+    "sys_ui_module": true,
+    "sys_script_email": true,
+    "sysevent_email_template": true,
+    "sysevent_in_email_action": true,
+    "sysevent_email_action": true,
+    "sys_push_notif_act_script": true,
+    "sys_push_notif_msg_content": true,
+    "trigger_rule": true,
+    "sys_rest_message": true,
+    "scheduled_data_export": true,
+    "sys_soap_message_function": true,
+    "sys_soap_message": true,
+    "pa_scripts": true,
+    "pc_vendor_cat_item": true,
+    "sys_properties_category": true,
+    "metric_definition": true,
+    "sysauto_report": true,
+    "cmn_relative_duration": true,
+    "risk_conditions": true,
+    "cmn_schedule": true,
+    "sys_script": true,
+    "sys_extension_point": true,
+    "sys_script_fix": true,
+    "sys_processor": true,
+    "sysauto_script": true,
+    "sysevent_script_action": true,
+    "sys_script_include": true,
+    "sys_ui_action": true,
+    "sc_ic_aprvl_type_defn_staging": true,
+    "catalog_script_client": true,
+    "sc_cat_item": true,
+    "catalog_ui_policy": true,
+    "sc_cat_item_option": true,
+    "sc_cat_item_guide": true,
+    "sc_cat_item_producer": true,
+    "sc_ic_task_assign_defn_staging": true,
+    "user_criteria": true,
+    "sysrule_escalate": true,
+    "sp_ng_template": true,
+    "sp_instance": true,
+    "sp_search_source": true,
+    "sp_page": true,
+    "sp_portal": true,
+    "sp_css": true,
+    "sp_theme": true,
+    "sp_angular_provider": true,
+    "sp_widget": true,
+    "trend_definition": true,
+    "sys_ui_ng_action": true,
+    "sys_script_vtable": true,
+    "sn_templated_snip_note_template": true,
+    "sys_script_validator": true,
+    "sys_email_filter": true,
+    "sys_sg_data_item": true,
+    "sys_email_layout": true,
+    "sys_process_flow": true,
+    "sys_widgets": true,
+    "wf_element_activity": true,
+    "wf_activity_definition": true,
+    "wf_ui_policy": true
+  },
+  "Miscellaneous": {
+    "Dictionary Entries": {
+      "Subcategory": {
+        "sys_id": "13b3627a83840310060c5950ceaad3fe",
+        "sys_updated_on": "2026-04-08 14:10:59",
+        "SERVER_MOD_TIME": 1775628659000,
+        "LOCAL_MOD_TIME": 1776328862881,
+        "CURRENT_LOCAL_MOD_TIME": 1776328862881
+      },
+      "Weight": {
+        "sys_id": "23b3a27a83840310060c5950ceaad316",
+        "sys_updated_on": "2026-04-08 14:10:59",
+        "SERVER_MOD_TIME": 1775628659000,
+        "LOCAL_MOD_TIME": 1776328862905,
+        "CURRENT_LOCAL_MOD_TIME": 1776328862905
+      },
+      "x_1984194_everstoc_user_preference": {
+        "sys_id": "03b3227a83840310060c5950ceaad3eb",
+        "sys_updated_on": "2026-04-08 14:10:57",
+        "SERVER_MOD_TIME": 1775628657000,
+        "LOCAL_MOD_TIME": 1776328862915,
+        "CURRENT_LOCAL_MOD_TIME": 1776328862915
+      },
+      "x_1984194_everstoc_category": {
+        "sys_id": "1bb3627a83840310060c5950ceaad3c3",
+        "sys_updated_on": "2026-04-08 14:10:58",
+        "SERVER_MOD_TIME": 1775628658000,
+        "LOCAL_MOD_TIME": 1776328862946,
+        "CURRENT_LOCAL_MOD_TIME": 1776328862946
+      },
+      "Default Frequency": {
+        "sys_id": "07b3227a83840310060c5950ceaad3f5",
+        "sys_updated_on": "2026-04-08 14:10:57",
+        "SERVER_MOD_TIME": 1775628657000,
+        "LOCAL_MOD_TIME": 1776328862958,
+        "CURRENT_LOCAL_MOD_TIME": 1776328862958
+      },
+      "Read At": {
+        "sys_id": "0fb3627a83840310060c5950ceaad33a",
+        "sys_updated_on": "2026-04-08 14:10:57",
+        "SERVER_MOD_TIME": 1775628657000,
+        "LOCAL_MOD_TIME": 1776328862972,
+        "CURRENT_LOCAL_MOD_TIME": 1776328862972
+      },
+      "Default Address": {
+        "sys_id": "1bb3627a83840310060c5950ceaad38a",
+        "sys_updated_on": "2026-04-08 14:10:58",
+        "SERVER_MOD_TIME": 1775628658000,
+        "LOCAL_MOD_TIME": 1776328862999,
+        "CURRENT_LOCAL_MOD_TIME": 1776328862999
+      },
+      "Reminder": {
+        "sys_id": "07b3627a83840310060c5950ceaad328",
+        "sys_updated_on": "2026-04-08 14:10:57",
+        "SERVER_MOD_TIME": 1775628657000,
+        "LOCAL_MOD_TIME": 1776328863009,
+        "CURRENT_LOCAL_MOD_TIME": 1776328863009
+      },
+      "Message": {
+        "sys_id": "0bb3627a83840310060c5950ceaad331",
+        "sys_updated_on": "2026-04-08 14:10:57",
+        "SERVER_MOD_TIME": 1775628657000,
+        "LOCAL_MOD_TIME": 1776328863033,
+        "CURRENT_LOCAL_MOD_TIME": 1776328863033
+      },
+      "x_1984194_everstoc_order": {
+        "sys_id": "fab3227a83840310060c5950ceaad3af",
+        "sys_updated_on": "2026-04-08 14:10:56",
+        "SERVER_MOD_TIME": 1775628656000,
+        "LOCAL_MOD_TIME": 1776328863580,
+        "CURRENT_LOCAL_MOD_TIME": 1776328863580
+      },
+      "x_1984194_everstoc_brand": {
+        "sys_id": "f7b3a27a83840310060c5950ceaad3db",
+        "sys_updated_on": "2026-04-08 14:11:00",
+        "SERVER_MOD_TIME": 1775628660000,
+        "LOCAL_MOD_TIME": 1776328863612,
+        "CURRENT_LOCAL_MOD_TIME": 1776328863612
+      },
+      "Order Date": {
+        "sys_id": "feb3227a83840310060c5950ceaad3bb",
+        "sys_updated_on": "2026-04-08 14:10:56",
+        "SERVER_MOD_TIME": 1775628656000,
+        "LOCAL_MOD_TIME": 1776328863620,
+        "CURRENT_LOCAL_MOD_TIME": 1776328863620
+      },
+      "Suggestion Type": {
+        "sys_id": "fab3227a83840310060c5950ceaad37c",
+        "sys_updated_on": "2026-04-08 14:10:56",
+        "SERVER_MOD_TIME": 1775628656000,
+        "LOCAL_MOD_TIME": 1776328863654,
+        "CURRENT_LOCAL_MOD_TIME": 1776328863654
+      },
+      "Next Reminder Date": {
+        "sys_id": "efb3a27a83840310060c5950ceaad350",
+        "sys_updated_on": "2026-04-08 14:10:59",
+        "SERVER_MOD_TIME": 1775628659000,
+        "LOCAL_MOD_TIME": 1776328863655,
+        "CURRENT_LOCAL_MOD_TIME": 1776328863655
+      },
+      "x_1984194_everstoc_subcategory": {
+        "sys_id": "efb3a27a83840310060c5950ceaad3b1",
+        "sys_updated_on": "2026-04-08 14:11:00",
+        "SERVER_MOD_TIME": 1775628660000,
+        "LOCAL_MOD_TIME": 1776328863682,
+        "CURRENT_LOCAL_MOD_TIME": 1776328863682
+      },
+      "Price": {
+        "sys_id": "efb3a27a83840310060c5950ceaad304",
+        "sys_updated_on": "2026-04-08 14:10:59",
+        "SERVER_MOD_TIME": 1775628659000,
+        "LOCAL_MOD_TIME": 1776328863682,
+        "CURRENT_LOCAL_MOD_TIME": 1776328863682
+      },
+      "Size": {
+        "sys_id": "ebb3a27a83840310060c5950ceaad313",
+        "sys_updated_on": "2026-04-08 14:10:59",
+        "SERVER_MOD_TIME": 1775628659000,
+        "LOCAL_MOD_TIME": 1776328863701,
+        "CURRENT_LOCAL_MOD_TIME": 1776328863701
+      },
+      "Unit Price": {
+        "sys_id": "e2b3227a83840310060c5950ceaad343",
+        "sys_updated_on": "2026-04-08 14:10:56",
+        "SERVER_MOD_TIME": 1775628656000,
+        "LOCAL_MOD_TIME": 1776328863716,
+        "CURRENT_LOCAL_MOD_TIME": 1776328863716
+      },
+      "Brand": {
+        "sys_id": "dbb3627a83840310060c5950ceaad3fb",
+        "sys_updated_on": "2026-04-08 14:10:59",
+        "SERVER_MOD_TIME": 1775628659000,
+        "LOCAL_MOD_TIME": 1776328863771,
+        "CURRENT_LOCAL_MOD_TIME": 1776328863771
+      },
+      "Full Address": {
+        "sys_id": "d3b3627a83840310060c5950ceaad388",
+        "sys_updated_on": "2026-04-08 14:10:58",
+        "SERVER_MOD_TIME": 1775628658000,
+        "LOCAL_MOD_TIME": 1776328864346,
+        "CURRENT_LOCAL_MOD_TIME": 1776328864346
+      },
+      "User_cfb3227a83840310060c5950ceaad3f2": {
+        "sys_id": "cfb3227a83840310060c5950ceaad3f2",
+        "sys_updated_on": "2026-04-08 14:10:57",
+        "SERVER_MOD_TIME": 1775628657000,
+        "LOCAL_MOD_TIME": 1776328864371,
+        "CURRENT_LOCAL_MOD_TIME": 1776328864371
+      },
+      "Channel": {
+        "sys_id": "c3b3627a83840310060c5950ceaad32f",
+        "sys_updated_on": "2026-04-08 14:10:57",
+        "SERVER_MOD_TIME": 1775628657000,
+        "LOCAL_MOD_TIME": 1776328864406,
+        "CURRENT_LOCAL_MOD_TIME": 1776328864406
+      },
+      "Source Channel": {
+        "sys_id": "b7b3a27a83840310060c5950ceaad3e5",
+        "sys_updated_on": "2026-04-08 14:11:00",
+        "SERVER_MOD_TIME": 1775628660000,
+        "LOCAL_MOD_TIME": 1776328864408,
+        "CURRENT_LOCAL_MOD_TIME": 1776328864408
+      },
+      "Delivery Address": {
+        "sys_id": "bab3227a83840310060c5950ceaad3b9",
+        "sys_updated_on": "2026-04-08 14:10:56",
+        "SERVER_MOD_TIME": 1775628656000,
+        "LOCAL_MOD_TIME": 1776328864458,
+        "CURRENT_LOCAL_MOD_TIME": 1776328864458
+      },
+      "Sent At": {
+        "sys_id": "c7b3627a83840310060c5950ceaad338",
+        "sys_updated_on": "2026-04-08 14:10:57",
+        "SERVER_MOD_TIME": 1775628657000,
+        "LOCAL_MOD_TIME": 1776328864459,
+        "CURRENT_LOCAL_MOD_TIME": 1776328864459
+      },
+      "Source Channel_beb3227a83840310060c5950ceaad3c2": {
+        "sys_id": "beb3227a83840310060c5950ceaad3c2",
+        "sys_updated_on": "2026-04-08 14:10:57",
+        "SERVER_MOD_TIME": 1775628657000,
+        "LOCAL_MOD_TIME": 1776328864459,
+        "CURRENT_LOCAL_MOD_TIME": 1776328864459
+      },
+      "Product_b6b3227a83840310060c5950ceaad37a": {
+        "sys_id": "b6b3227a83840310060c5950ceaad37a",
+        "sys_updated_on": "2026-04-08 14:10:56",
+        "SERVER_MOD_TIME": 1775628656000,
+        "LOCAL_MOD_TIME": 1776328864508,
+        "CURRENT_LOCAL_MOD_TIME": 1776328864508
+      },
+      "x_1984194_everstoc_ai_recommendation": {
+        "sys_id": "b2b3227a83840310060c5950ceaad370",
+        "sys_updated_on": "2026-04-08 14:10:56",
+        "SERVER_MOD_TIME": 1775628656000,
+        "LOCAL_MOD_TIME": 1776328864510,
+        "CURRENT_LOCAL_MOD_TIME": 1776328864510
+      },
+      "Subcategory Name": {
+        "sys_id": "afb3a27a83840310060c5950ceaad3bb",
+        "sys_updated_on": "2026-04-08 14:11:00",
+        "SERVER_MOD_TIME": 1775628660000,
+        "LOCAL_MOD_TIME": 1776328865020,
+        "CURRENT_LOCAL_MOD_TIME": 1776328865020
+      },
+      "Assigned To": {
+        "sys_id": "afb3a27a83840310060c5950ceaad357",
+        "sys_updated_on": "2026-04-08 14:10:59",
+        "SERVER_MOD_TIME": 1775628659000,
+        "LOCAL_MOD_TIME": 1776328865140,
+        "CURRENT_LOCAL_MOD_TIME": 1776328865140
+      },
+      "Quantity": {
+        "sys_id": "aeb3227a83840310060c5950ceaad340",
+        "sys_updated_on": "2026-04-08 14:10:56",
+        "SERVER_MOD_TIME": 1775628656000,
+        "LOCAL_MOD_TIME": 1776328865158,
+        "CURRENT_LOCAL_MOD_TIME": 1776328865158
+      },
+      "Default Reorder Days": {
+        "sys_id": "abb3a27a83840310060c5950ceaad31a",
+        "sys_updated_on": "2026-04-08 14:10:59",
+        "SERVER_MOD_TIME": 1775628659000,
+        "LOCAL_MOD_TIME": 1776328865163,
+        "CURRENT_LOCAL_MOD_TIME": 1776328865163
+      },
+      "Reminder Frequency": {
+        "sys_id": "abb3a27a83840310060c5950ceaad34e",
+        "sys_updated_on": "2026-04-08 14:10:59",
+        "SERVER_MOD_TIME": 1775628659000,
+        "LOCAL_MOD_TIME": 1776328865181,
+        "CURRENT_LOCAL_MOD_TIME": 1776328865181
+      },
+      "x_1984194_everstoc_user_address": {
+        "sys_id": "9bb3627a83840310060c5950ceaad37b",
+        "sys_updated_on": "2026-04-08 14:10:58",
+        "SERVER_MOD_TIME": 1775628658000,
+        "LOCAL_MOD_TIME": 1776328865216,
+        "CURRENT_LOCAL_MOD_TIME": 1776328865216
+      },
+      "Stock Unit": {
+        "sys_id": "abb3a27a83840310060c5950ceaad302",
+        "sys_updated_on": "2026-04-08 14:10:59",
+        "SERVER_MOD_TIME": 1775628659000,
+        "LOCAL_MOD_TIME": 1776328865220,
+        "CURRENT_LOCAL_MOD_TIME": 1776328865220
+      },
+      "Address Label": {
+        "sys_id": "9fb3627a83840310060c5950ceaad385",
+        "sys_updated_on": "2026-04-08 14:10:58",
+        "SERVER_MOD_TIME": 1775628658000,
+        "LOCAL_MOD_TIME": 1776328865249,
+        "CURRENT_LOCAL_MOD_TIME": 1776328865249
+      },
+      "x_1984194_everstoc_reminder": {
+        "sys_id": "a7b3a27a83840310060c5950ceaad342",
+        "sys_updated_on": "2026-04-08 14:10:59",
+        "SERVER_MOD_TIME": 1775628659000,
+        "LOCAL_MOD_TIME": 1776328865259,
+        "CURRENT_LOCAL_MOD_TIME": 1776328865259
+      },
+      "User_76b3227a83840310060c5950ceaad3b7": {
+        "sys_id": "76b3227a83840310060c5950ceaad3b7",
+        "sys_updated_on": "2026-04-08 14:10:56",
+        "SERVER_MOD_TIME": 1775628656000,
+        "LOCAL_MOD_TIME": 1776328866819,
+        "CURRENT_LOCAL_MOD_TIME": 1776328866819
+      },
+      "State_7ab3227a83840310060c5950ceaad3c0": {
+        "sys_id": "7ab3227a83840310060c5950ceaad3c0",
+        "sys_updated_on": "2026-04-08 14:10:56",
+        "SERVER_MOD_TIME": 1775628656000,
+        "LOCAL_MOD_TIME": 1776328866864,
+        "CURRENT_LOCAL_MOD_TIME": 1776328866864
+      },
+      "Brand Name": {
+        "sys_id": "73b3a27a83840310060c5950ceaad3e3",
+        "sys_updated_on": "2026-04-08 14:11:00",
+        "SERVER_MOD_TIME": 1775628660000,
+        "LOCAL_MOD_TIME": 1776328866888,
+        "CURRENT_LOCAL_MOD_TIME": 1776328866888
+      },
+      "Product_8fb3627a83840310060c5950ceaad32c": {
+        "sys_id": "8fb3627a83840310060c5950ceaad32c",
+        "sys_updated_on": "2026-04-08 14:10:57",
+        "SERVER_MOD_TIME": 1775628657000,
+        "LOCAL_MOD_TIME": 1776328866901,
+        "CURRENT_LOCAL_MOD_TIME": 1776328866901
+      },
+      "Category Name": {
+        "sys_id": "93b3627a83840310060c5950ceaad3cb",
+        "sys_updated_on": "2026-04-08 14:10:58",
+        "SERVER_MOD_TIME": 1775628658000,
+        "LOCAL_MOD_TIME": 1776328866902,
+        "CURRENT_LOCAL_MOD_TIME": 1776328866902
+      },
+      "Opt-in Reminders": {
+        "sys_id": "8fb3227a83840310060c5950ceaad3f9",
+        "sys_updated_on": "2026-04-08 14:10:57",
+        "SERVER_MOD_TIME": 1775628657000,
+        "LOCAL_MOD_TIME": 1776328866950,
+        "CURRENT_LOCAL_MOD_TIME": 1776328866950
+      },
+      "ServiceNow Notification Reference": {
+        "sys_id": "83b3627a83840310060c5950ceaad336",
+        "sys_updated_on": "2026-04-08 14:10:57",
+        "SERVER_MOD_TIME": 1775628657000,
+        "LOCAL_MOD_TIME": 1776328866972,
+        "CURRENT_LOCAL_MOD_TIME": 1776328866972
+      },
+      "User_72b3227a83840310060c5950ceaad378": {
+        "sys_id": "72b3227a83840310060c5950ceaad378",
+        "sys_updated_on": "2026-04-08 14:10:56",
+        "SERVER_MOD_TIME": 1775628656000,
+        "LOCAL_MOD_TIME": 1776328867553,
+        "CURRENT_LOCAL_MOD_TIME": 1776328867553
+      },
+      "Category": {
+        "sys_id": "6bb3a27a83840310060c5950ceaad3b9",
+        "sys_updated_on": "2026-04-08 14:11:00",
+        "SERVER_MOD_TIME": 1775628660000,
+        "LOCAL_MOD_TIME": 1776328867570,
+        "CURRENT_LOCAL_MOD_TIME": 1776328867570
+      },
+      "User_6eb3ee3a83840310060c5950ceaad3e6": {
+        "sys_id": "6eb3ee3a83840310060c5950ceaad3e6",
+        "sys_updated_on": "2026-04-08 14:10:55",
+        "SERVER_MOD_TIME": 1775628655000,
+        "LOCAL_MOD_TIME": 1776328867587,
+        "CURRENT_LOCAL_MOD_TIME": 1776328867587
+      },
+      "State_6bb3a27a83840310060c5950ceaad355": {
+        "sys_id": "6bb3a27a83840310060c5950ceaad355",
+        "sys_updated_on": "2026-04-08 14:10:59",
+        "SERVER_MOD_TIME": 1775628659000,
+        "LOCAL_MOD_TIME": 1776328867598,
+        "CURRENT_LOCAL_MOD_TIME": 1776328867598
+      },
+      "Action Date": {
+        "sys_id": "6ab3ee3a83840310060c5950ceaad3ed",
+        "sys_updated_on": "2026-04-08 14:10:55",
+        "SERVER_MOD_TIME": 1775628655000,
+        "LOCAL_MOD_TIME": 1776328867625,
+        "CURRENT_LOCAL_MOD_TIME": 1776328867625
+      },
+      "Product_6ab3227a83840310060c5950ceaad33e": {
+        "sys_id": "6ab3227a83840310060c5950ceaad33e",
+        "sys_updated_on": "2026-04-08 14:10:56",
+        "SERVER_MOD_TIME": 1775628656000,
+        "LOCAL_MOD_TIME": 1776328867639,
+        "CURRENT_LOCAL_MOD_TIME": 1776328867639
+      },
+      "Product": {
+        "sys_id": "67b3a27a83840310060c5950ceaad34c",
+        "sys_updated_on": "2026-04-08 14:10:59",
+        "SERVER_MOD_TIME": 1775628659000,
+        "LOCAL_MOD_TIME": 1776328867668,
+        "CURRENT_LOCAL_MOD_TIME": 1776328867668
+      },
+      "Postponed Until": {
+        "sys_id": "66b3ee3a83840310060c5950ceaad3eb",
+        "sys_updated_on": "2026-04-08 14:10:55",
+        "SERVER_MOD_TIME": 1775628655000,
+        "LOCAL_MOD_TIME": 1776328867680,
+        "CURRENT_LOCAL_MOD_TIME": 1776328867680
+      },
+      "Reminder_66b3ee3a83840310060c5950ceaad3e3": {
+        "sys_id": "66b3ee3a83840310060c5950ceaad3e3",
+        "sys_updated_on": "2026-04-08 14:10:55",
+        "SERVER_MOD_TIME": 1775628655000,
+        "LOCAL_MOD_TIME": 1776328867702,
+        "CURRENT_LOCAL_MOD_TIME": 1776328867702
+      },
+      "Pack Type": {
+        "sys_id": "67b3a27a83840310060c5950ceaad318",
+        "sys_updated_on": "2026-04-08 14:10:59",
+        "SERVER_MOD_TIME": 1775628659000,
+        "LOCAL_MOD_TIME": 1776328867704,
+        "CURRENT_LOCAL_MOD_TIME": 1776328867704
+      },
+      "Action Type": {
+        "sys_id": "62b3ee3a83840310060c5950ceaad3e9",
+        "sys_updated_on": "2026-04-08 14:10:55",
+        "SERVER_MOD_TIME": 1775628655000,
+        "LOCAL_MOD_TIME": 1776328868251,
+        "CURRENT_LOCAL_MOD_TIME": 1776328868251
+      },
+      "x_1984194_everstoc_reminder_action": {
+        "sys_id": "62b3ee3a83840310060c5950ceaad3be",
+        "sys_updated_on": "2026-04-08 14:10:55",
+        "SERVER_MOD_TIME": 1775628655000,
+        "LOCAL_MOD_TIME": 1776328868322,
+        "CURRENT_LOCAL_MOD_TIME": 1776328868322
+      },
+      "Product Name": {
+        "sys_id": "57b3a27a83840310060c5950ceaad300",
+        "sys_updated_on": "2026-04-08 14:10:59",
+        "SERVER_MOD_TIME": 1775628659000,
+        "LOCAL_MOD_TIME": 1776328868400,
+        "CURRENT_LOCAL_MOD_TIME": 1776328868400
+      },
+      "x_1984194_everstoc_product": {
+        "sys_id": "53b3627a83840310060c5950ceaad3f4",
+        "sys_updated_on": "2026-04-08 14:10:59",
+        "SERVER_MOD_TIME": 1775628659000,
+        "LOCAL_MOD_TIME": 1776328868412,
+        "CURRENT_LOCAL_MOD_TIME": 1776328868412
+      },
+      "State": {
+        "sys_id": "4fb3627a83840310060c5950ceaad333",
+        "sys_updated_on": "2026-04-08 14:10:57",
+        "SERVER_MOD_TIME": 1775628657000,
+        "LOCAL_MOD_TIME": 1776328868432,
+        "CURRENT_LOCAL_MOD_TIME": 1776328868432
+      },
+      "Preferred Channel": {
+        "sys_id": "4bb3227a83840310060c5950ceaad3f7",
+        "sys_updated_on": "2026-04-08 14:10:57",
+        "SERVER_MOD_TIME": 1775628657000,
+        "LOCAL_MOD_TIME": 1776328868456,
+        "CURRENT_LOCAL_MOD_TIME": 1776328868456
+      },
+      "User_4bb3627a83840310060c5950ceaad32a": {
+        "sys_id": "4bb3627a83840310060c5950ceaad32a",
+        "sys_updated_on": "2026-04-08 14:10:57",
+        "SERVER_MOD_TIME": 1775628657000,
+        "LOCAL_MOD_TIME": 1776328868456,
+        "CURRENT_LOCAL_MOD_TIME": 1776328868456
+      },
+      "x_1984194_everstoc_notification": {
+        "sys_id": "47b3627a83840310060c5950ceaad320",
+        "sys_updated_on": "2026-04-08 14:10:57",
+        "SERVER_MOD_TIME": 1775628657000,
+        "LOCAL_MOD_TIME": 1776328868969,
+        "CURRENT_LOCAL_MOD_TIME": 1776328868969
+      },
+      "Total Amount": {
+        "sys_id": "36b3227a83840310060c5950ceaad3be",
+        "sys_updated_on": "2026-04-08 14:10:56",
+        "SERVER_MOD_TIME": 1775628656000,
+        "LOCAL_MOD_TIME": 1776328869033,
+        "CURRENT_LOCAL_MOD_TIME": 1776328869033
+      },
+      "Confidence Score": {
+        "sys_id": "32b3227a83840310060c5950ceaad37f",
+        "sys_updated_on": "2026-04-08 14:10:56",
+        "SERVER_MOD_TIME": 1775628656000,
+        "LOCAL_MOD_TIME": 1776328869069,
+        "CURRENT_LOCAL_MOD_TIME": 1776328869069
+      },
+      "x_1984194_everstoc_order_item": {
+        "sys_id": "2eb3227a83840310060c5950ceaad31b",
+        "sys_updated_on": "2026-04-08 14:10:55",
+        "SERVER_MOD_TIME": 1775628655000,
+        "LOCAL_MOD_TIME": 1776328869150,
+        "CURRENT_LOCAL_MOD_TIME": 1776328869150
+      },
+      "Last Triggered Date": {
+        "sys_id": "27b3a27a83840310060c5950ceaad353",
+        "sys_updated_on": "2026-04-08 14:10:59",
+        "SERVER_MOD_TIME": 1775628659000,
+        "LOCAL_MOD_TIME": 1776328869160,
+        "CURRENT_LOCAL_MOD_TIME": 1776328869160
+      },
+      "Order": {
+        "sys_id": "26b3227a83840310060c5950ceaad33c",
+        "sys_updated_on": "2026-04-08 14:10:56",
+        "SERVER_MOD_TIME": 1775628656000,
+        "LOCAL_MOD_TIME": 1776328869187,
+        "CURRENT_LOCAL_MOD_TIME": 1776328869187
+      },
+      "User": {
+        "sys_id": "23b3a27a83840310060c5950ceaad34a",
+        "sys_updated_on": "2026-04-08 14:10:59",
+        "SERVER_MOD_TIME": 1775628659000,
+        "LOCAL_MOD_TIME": 1776328869206,
+        "CURRENT_LOCAL_MOD_TIME": 1776328869206
+      },
+      "User_5bb3627a83840310060c5950ceaad383": {
+        "sys_id": "5bb3627a83840310060c5950ceaad383",
+        "sys_updated_on": "2026-04-08 14:10:58",
+        "SERVER_MOD_TIME": 1775628658000,
+        "LOCAL_MOD_TIME": 1776328869576,
+        "CURRENT_LOCAL_MOD_TIME": 1776328869576
+      }
+    }
+  },
+  "Data Model": {
+    "Tables": {
+      "Everstoc Notification": {
+        "sys_id": "07b3627a83840310060c5950ceaad31c"
+      },
+      "Everstoc Category": {
+        "sys_id": "17b3627a83840310060c5950ceaad3bf"
+      },
+      "Everstoc Order Item": {
+        "sys_id": "2ab3227a83840310060c5950ceaad317"
+      },
+      "Everstoc Subcategory": {
+        "sys_id": "2fb3a27a83840310060c5950ceaad3ad"
+      },
+      "Everstoc Brand": {
+        "sys_id": "37b3a27a83840310060c5950ceaad3d7"
+      },
+      "Everstoc User Address": {
+        "sys_id": "5bb3627a83840310060c5950ceaad377"
+      },
+      "Everstoc Ai Recommendation": {
+        "sys_id": "72b3227a83840310060c5950ceaad36c"
+      },
+      "Everstoc Product": {
+        "sys_id": "9fb3627a83840310060c5950ceaad3ef"
+      },
+      "Everstoc Reminder": {
+        "sys_id": "a3b3a27a83840310060c5950ceaad33e"
+      },
+      "Everstoc User Preference": {
+        "sys_id": "cfb3227a83840310060c5950ceaad3e6"
+      },
+      "Everstoc Reminder Action": {
+        "sys_id": "deb3ee3a83840310060c5950ceaad3b7"
+      },
+      "Everstoc Order": {
+        "sys_id": "f6b3227a83840310060c5950ceaad3ab"
+      }
+    }
+  },
+  "Server Development": {
+    "Scheduled Script Executions": {
+      "Send Reminder Notifications": {
+        "sys_id": "1b711f0583100710060c5950ceaad3eb",
+        "sys_updated_on": "2026-04-16 05:30:15",
+        "SERVER_MOD_TIME": 1776288615000,
+        "LOCAL_MOD_TIME": 1776328862897,
+        "CURRENT_LOCAL_MOD_TIME": 1776328862897
+      }
+    },
+    "UI Actions": {
+      "Postpone 3 Days": {
+        "sys_id": "8aab620983d8c310060c5950ceaad3c5",
+        "sys_updated_on": "2026-04-15 14:33:52",
+        "SERVER_MOD_TIME": 1776234832000,
+        "LOCAL_MOD_TIME": 1776328866822,
+        "CURRENT_LOCAL_MOD_TIME": 1776328866822
+      },
+      "Skip Reminder": {
+        "sys_id": "387feecd83d8c310060c5950ceaad345",
+        "sys_updated_on": "2026-04-15 14:49:17",
+        "SERVER_MOD_TIME": 1776235757000,
+        "LOCAL_MOD_TIME": 1776328868991,
+        "CURRENT_LOCAL_MOD_TIME": 1776328868991
+      }
+    },
+    "Business Rules": {
+      "Send Reminder Notification": {
+        "sys_id": "9547d6e217c046f39da3152f4933fc30",
+        "sys_updated_on": "2026-04-15 12:44:06",
+        "SERVER_MOD_TIME": 1776228246000,
+        "LOCAL_MOD_TIME": 1776328865282,
+        "CURRENT_LOCAL_MOD_TIME": 1776328865282
+      },
+      "Create Reminder": {
+        "sys_id": "8c308b41839cc310060c5950ceaad379",
+        "sys_updated_on": "2026-04-16 05:25:27",
+        "SERVER_MOD_TIME": 1776288327000,
+        "LOCAL_MOD_TIME": 1776328866941,
+        "CURRENT_LOCAL_MOD_TIME": 1776328866941
+      },
+      "Create Reorder Reminder": {
+        "sys_id": "6636982dfa944e27ada5fcf84f2c076e",
+        "sys_updated_on": "2026-04-15 12:44:06",
+        "SERVER_MOD_TIME": 1776228246000,
+        "LOCAL_MOD_TIME": 1776328868283,
+        "CURRENT_LOCAL_MOD_TIME": 1776328868283
+      }
+    }
+  },
+  "Navigation": {
+    "Modules": {
+      "Products": {
+        "sys_id": "3eea7ec5835cc310060c5950ceaad33e"
+      },
+      "Category": {
+        "sys_id": "7c6ee74d83d00710060c5950ceaad3c1"
+      },
+      "Order Items": {
+        "sys_id": "98ebf649835cc310060c5950ceaad33c"
+      },
+      "Subcategory": {
+        "sys_id": "a9fa6f8583d00710060c5950ceaad345"
+      },
+      "Product": {
+        "sys_id": "b59bfe09835cc310060c5950ceaad334"
+      },
+      "Reminders": {
+        "sys_id": "bd0cfe49835cc310060c5950ceaad36a"
+      },
+      "Brand": {
+        "sys_id": "ce4be7c583d00710060c5950ceaad312"
+      },
+      "Order": {
+        "sys_id": "eafcfd5183544710060c5950ceaad306"
+      }
+    }
+  },
+  "Forms & UI": {
+    "UI Pages": {
+      "incident_manager": {
+        "sys_id": "d634f05356654a3e966f5aaf7144dab6",
+        "sys_updated_on": "2026-04-08 14:11:03",
+        "SERVER_MOD_TIME": 1775628663000,
+        "LOCAL_MOD_TIME": 1776328864330,
+        "CURRENT_LOCAL_MOD_TIME": 1776328864330
+      },
+      "reminder_dashboard": {
+        "sys_id": "59e8d50971774dbbb784505257d6e477",
+        "sys_updated_on": "2026-04-15 12:44:07",
+        "SERVER_MOD_TIME": 1776228247000,
+        "LOCAL_MOD_TIME": 1776328868360,
+        "CURRENT_LOCAL_MOD_TIME": 1776328868360
+      }
+    }
+  },
+  "Notifications": {
+    "Notifications": {
+      "Reminder Notification": {
+        "sys_id": "7f13e3c583900710060c5950ceaad387",
+        "sys_updated_on": "2026-04-15 18:48:21",
+        "SERVER_MOD_TIME": 1776250101000,
+        "LOCAL_MOD_TIME": 1776328866869,
+        "CURRENT_LOCAL_MOD_TIME": 1776328866869
+      }
+    }
+  }
+}
