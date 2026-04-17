@@ -187,6 +187,45 @@
         display: none;
       }
 
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 32, 0.45);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 20;
+        padding: 16px;
+      }
+
+      .modal-backdrop.open {
+        display: flex;
+      }
+
+      .modal {
+        width: 100%;
+        max-width: 420px;
+        background: #fff;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        padding: 16px;
+      }
+
+      .modal h3 {
+        margin: 0 0 8px;
+        font-size: 18px;
+      }
+
+      .modal p {
+        margin: 0 0 12px;
+      }
+
+      .modal-actions {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+      }
+
       @media (max-width: 900px) {
         .layout {
           grid-template-columns: 1fr;
@@ -265,7 +304,7 @@
 
           <div class="card">
             <h2>Demo Order</h2>
-            <p class="muted">Creates an active reminder for your user with the first available product.</p>
+            <p class="muted">Creates order and order item for your account. Reminder and email are auto-triggered.</p>
             <button id="btn-place-order">Place Demo Order</button>
             <div class="msg" id="order-msg"></div>
           </div>
@@ -288,6 +327,22 @@
             <h2>Recent Notifications</h2>
             <div id="notifications-wrap" class="muted">Loading notifications...</div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="postpone-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="postpone-title">
+      <div class="modal">
+        <h3 id="postpone-title">Postpone Reminder</h3>
+        <p class="muted">Select a new due date and time. Past values are not allowed.</p>
+        <div class="field">
+          <label for="postpone-datetime">New Date and Time</label>
+          <input id="postpone-datetime" type="datetime-local" />
+        </div>
+        <div class="msg" id="postpone-msg"></div>
+        <div class="modal-actions">
+          <button id="postpone-cancel" class="secondary" type="button">Cancel</button>
+          <button id="postpone-confirm" type="button">Apply</button>
         </div>
       </div>
     </div>
@@ -324,9 +379,9 @@
         };
 
         var stateLabel = {
-          '1': 'Active',
-          '2': 'Paused',
-          '3': 'Cancelled',
+          '1': 'Pending',
+          '2': 'Postponed',
+          '3': 'Skipped',
           '4': 'Completed'
         };
 
@@ -523,6 +578,70 @@
           return y + '-' + m + '-' + d + ' ' + h + ':' + min + ':' + s;
         }
 
+        function toLocalDateTimeInputValue(jsDate) {
+          var y = jsDate.getFullYear();
+          var m = String(jsDate.getMonth() + 1).padStart(2, '0');
+          var d = String(jsDate.getDate()).padStart(2, '0');
+          var h = String(jsDate.getHours()).padStart(2, '0');
+          var min = String(jsDate.getMinutes()).padStart(2, '0');
+          return y + '-' + m + '-' + d + 'T' + h + ':' + min;
+        }
+
+        function choosePostponeDateTime() {
+          var modal = byId('postpone-modal');
+          var input = byId('postpone-datetime');
+          var confirmBtn = byId('postpone-confirm');
+          var cancelBtn = byId('postpone-cancel');
+
+          if (!modal || !input || !confirmBtn || !cancelBtn) {
+            return Promise.reject(new Error('Postpone picker is unavailable in this page.'));
+          }
+
+          return new Promise(function (resolve, reject) {
+            var now = new Date();
+            input.min = toLocalDateTimeInputValue(now);
+            input.value = toLocalDateTimeInputValue(now);
+            setMsg('postpone-msg', '');
+            modal.classList.add('open');
+
+            function cleanup() {
+              modal.classList.remove('open');
+              confirmBtn.removeEventListener('click', onConfirm);
+              cancelBtn.removeEventListener('click', onCancel);
+            }
+
+            function onCancel() {
+              cleanup();
+              reject(new Error('cancelled'));
+            }
+
+            function onConfirm() {
+              var raw = String(input.value || '').trim();
+              if (!raw) {
+                setMsg('postpone-msg', 'Please select a date and time.');
+                return;
+              }
+
+              var selected = new Date(raw);
+              if (isNaN(selected.getTime())) {
+                setMsg('postpone-msg', 'Invalid date/time value.');
+                return;
+              }
+
+              if (selected.getTime() < Date.now()) {
+                setMsg('postpone-msg', 'Past date/time is not allowed.');
+                return;
+              }
+
+              cleanup();
+              resolve(selected);
+            }
+
+            confirmBtn.addEventListener('click', onConfirm);
+            cancelBtn.addEventListener('click', onCancel);
+          });
+        }
+
         function callApi(method, path, body) {
           if (!globalThis.fetch) {
             return Promise.reject(new Error('Browser fetch API is unavailable in this session.'));
@@ -585,13 +704,12 @@
               return (
                 '<tr>' +
                 '<td>' + product + '</td>' +
-                '<td>' + freq + '</td>' +
-                '<td>' + nextDate + '</td>' +
+                '<td>' + nextDate + '<div class="muted">' + freq + '</div></td>' +
                 '<td><span class="badge state-' + state + '">' + label + '</span></td>' +
                 '<td>' +
                 (canAct
                   ? '<div class="row-actions">' +
-                    '<button class="warn" data-action="postpone" data-id="' + reminderId + '">Postpone 3 Days</button>' +
+                    '<button class="warn" data-action="postpone" data-id="' + reminderId + '">Postpone</button>' +
                     '<button class="danger" data-action="skip" data-id="' + reminderId + '">Skip</button>' +
                     '</div>'
                   : '<span class="muted">No actions</span>') +
@@ -603,7 +721,7 @@
 
           wrap.innerHTML =
             '<table>' +
-            '<thead><tr><th>Product</th><th>Frequency</th><th>Next Reminder</th><th>Status</th><th>Actions</th></tr></thead>' +
+            '<thead><tr><th>Service</th><th>Due Date</th><th>Status</th><th>Actions</th></tr></thead>' +
             '<tbody>' + rows + '</tbody>' +
             '</table>';
 
@@ -708,7 +826,7 @@
             API_BASE +
             '/x_1984194_everstoc_product?sysparm_display_value=all' +
             AMP +
-            'sysparm_fields=sys_id,product_name' +
+            'sysparm_fields=sys_id,product_name,price' +
             AMP +
             'sysparm_limit=1' +
             AMP +
@@ -720,6 +838,29 @@
             if (!records.length) {
               throw new Error('No products found. Create at least one product first.');
             }
+            return records[0];
+          });
+        }
+
+        function findAnyAddressForUser(userId) {
+          var query = encodeURIComponent('sys_user=' + userId + '^ORDERBYDESCis_default^ORDERBYDESCsys_created_on');
+          var path =
+            API_BASE +
+            '/x_1984194_everstoc_user_address?sysparm_display_value=all' +
+            AMP +
+            'sysparm_fields=sys_id,label' +
+            AMP +
+            'sysparm_limit=1' +
+            AMP +
+            'sysparm_query=' +
+            query;
+
+          return callApi('GET', path).then(function (data) {
+            var records = (data ? data.result : null) || [];
+            if (!records.length) {
+              throw new Error('No delivery address found for this user. Create one first.');
+            }
+
             return records[0];
           });
         }
@@ -736,23 +877,48 @@
           }
 
           btn.disabled = true;
-          setMsg('order-msg', 'Creating reminder...');
+          setMsg('order-msg', 'Placing order...');
 
-          findAnyProduct()
-            .then(function (product) {
+          Promise.all([findAnyProduct(), findAnyAddressForUser(currentUserId)])
+            .then(function (records) {
+              var product = records[0];
+              var address = records[1];
               var productId = asValue(product.sys_id);
-              var nextDate = toServiceNowDateTime(new Date());
+              var addressId = asValue(address.sys_id);
+              var unitPrice = parseFloat(String(asValue(product.price) || '0'));
 
-              return callApi('POST', API_BASE + '/x_1984194_everstoc_reminder', {
+              if (isNaN(unitPrice) || unitPrice <= 0) {
+                unitPrice = 1;
+              }
+
+              var orderBody = {
                 sys_user: currentUserId,
-                x_1984194_everstoc_product: productId,
-                reminder_frequency: 'weekly',
-                next_reminder_date: nextDate,
-                state: '1'
-              });
+                total_amount: unitPrice.toFixed(2),
+                x_1984194_everstoc_user_address: addressId,
+                state: 'pending',
+                source_channel: 'web',
+                order_date: toServiceNowDateTime(new Date())
+              };
+
+              return callApi('POST', API_BASE + '/x_1984194_everstoc_order', orderBody)
+                .then(function (orderResponse) {
+                  var orderRecord = (orderResponse && orderResponse.result) || {};
+                  var orderId = asValue(orderRecord.sys_id);
+
+                  if (!orderId) {
+                    throw new Error('Order creation succeeded but no order id was returned.');
+                  }
+
+                  return callApi('POST', API_BASE + '/x_1984194_everstoc_order_item', {
+                    x_1984194_everstoc_order: orderId,
+                    x_1984194_everstoc_product: productId,
+                    quantity: 1,
+                    unit_price: unitPrice.toFixed(2)
+                  });
+                });
             })
             .then(function () {
-              setMsg('order-msg', 'Demo order placed. Reminder created successfully.');
+              setMsg('order-msg', 'Demo order placed. Reminder was auto-created and notification was queued.');
               btn.disabled = false;
               return refreshAll('Dashboard refreshed.');
             })
@@ -764,6 +930,21 @@
 
         function updateReminder(reminderId, patchBody) {
           return callApi('PATCH', API_BASE + '/x_1984194_everstoc_reminder/' + reminderId, patchBody);
+        }
+
+        function createReminderAction(reminderId, actionType, postponedUntil) {
+          var actionBody = {
+            x_1984194_everstoc_reminder: reminderId,
+            sys_user: currentUserId,
+            action_type: actionType,
+            action_date: toServiceNowDateTime(new Date())
+          };
+
+          if (postponedUntil) {
+            actionBody.postponed_until = postponedUntil;
+          }
+
+          return callApi('POST', API_BASE + '/x_1984194_everstoc_reminder_action', actionBody);
         }
 
         function onReminderActionClick(event) {
@@ -780,15 +961,29 @@
 
           var actionPromise;
           if (action === 'postpone') {
-            var date = new Date();
-            date.setUTCDate(date.getUTCDate() + 3);
-            actionPromise = updateReminder(reminderId, {
-              next_reminder_date: toServiceNowDateTime(date),
-              state: '1'
-            });
+            actionPromise = choosePostponeDateTime()
+              .then(function (localDate) {
+                var postponedTo = toServiceNowDateTime(localDate);
+                return updateReminder(reminderId, {
+                  next_reminder_date: postponedTo,
+                  state: '2'
+                }).then(function () {
+                  return createReminderAction(reminderId, 'snooze', postponedTo);
+                });
+              })
+              .catch(function (e) {
+                if (e && e.message === 'cancelled') {
+                  setMsg('refresh-msg', 'Postpone cancelled.');
+                  return Promise.resolve();
+                }
+
+                return Promise.reject(e);
+              });
           } else if (action === 'skip') {
             actionPromise = updateReminder(reminderId, {
               state: '3'
+            }).then(function () {
+              return createReminderAction(reminderId, 'dismissed', '');
             });
           } else {
             actionPromise = Promise.resolve();
