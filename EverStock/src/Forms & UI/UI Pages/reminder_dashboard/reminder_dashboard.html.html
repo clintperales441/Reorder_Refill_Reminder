@@ -154,6 +154,39 @@
         gap: 8px;
       }
 
+      .auth-grid {
+        display: grid;
+        gap: 10px;
+      }
+
+      .field {
+        display: grid;
+        gap: 6px;
+      }
+
+      .field label {
+        font-size: 12px;
+        color: #344657;
+        font-weight: 600;
+      }
+
+      .field input {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 8px 10px;
+        font-size: 14px;
+      }
+
+      .auth-row {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .hidden {
+        display: none;
+      }
+
       @media (max-width: 900px) {
         .layout {
           grid-template-columns: 1fr;
@@ -174,6 +207,62 @@
 
       <div class="layout">
         <div class="stack">
+          <div class="card">
+            <h2>Account Access</h2>
+            <p class="muted" id="auth-status">Sign in to continue.</p>
+
+            <div class="auth-row" id="auth-switch-row">
+              <button class="secondary" id="btn-show-login">Login</button>
+              <button class="secondary" id="btn-show-register">Register</button>
+            </div>
+
+            <form id="login-form" class="auth-grid">
+              <div class="field">
+                <label for="login-username">Username</label>
+                <input id="login-username" type="text" autocomplete="username" />
+              </div>
+              <div class="field">
+                <label for="login-password">Password</label>
+                <input id="login-password" type="password" autocomplete="current-password" />
+              </div>
+              <div class="auth-row">
+                <button id="btn-login" type="submit">Sign In</button>
+              </div>
+            </form>
+
+            <form id="register-form" class="auth-grid hidden">
+              <div class="field">
+                <label for="register-username">Username</label>
+                <input id="register-username" type="text" autocomplete="username" />
+              </div>
+              <div class="field">
+                <label for="register-email">Email</label>
+                <input id="register-email" type="email" autocomplete="email" />
+              </div>
+              <div class="field">
+                <label for="register-display">Display Name</label>
+                <input id="register-display" type="text" autocomplete="name" />
+              </div>
+              <div class="field">
+                <label for="register-password">Password</label>
+                <input id="register-password" type="password" autocomplete="new-password" />
+              </div>
+              <div class="field">
+                <label for="register-confirm">Confirm Password</label>
+                <input id="register-confirm" type="password" autocomplete="new-password" />
+              </div>
+              <div class="auth-row">
+                <button id="btn-register" type="submit">Create Account</button>
+              </div>
+            </form>
+
+            <div class="auth-row hidden" id="auth-logout-row">
+              <button class="danger" id="btn-logout" type="button">Logout</button>
+            </div>
+
+            <div class="msg" id="auth-msg"></div>
+          </div>
+
           <div class="card">
             <h2>Demo Order</h2>
             <p class="muted">Creates an active reminder for your user with the first available product.</p>
@@ -206,7 +295,8 @@
     <script>
       (function () {
         var API_BASE = '/api/now/table';
-        var AMP = String.fromCharCode(38);
+        var AMP = String.fromCodePoint(38);
+        var APP_SESSION_KEY = 'everstock_app_session';
 
         function resolveCsrfToken() {
           if (globalThis.g_ck) {
@@ -224,25 +314,14 @@
 
         var csrfToken = resolveCsrfToken();
 
-        function resolveCurrentUserId() {
-          if (globalThis.g_user) {
-            if (globalThis.g_user.userID) {
-              return String(globalThis.g_user.userID);
-            }
-          }
-
-          if (globalThis.NOW) {
-            if (globalThis.NOW.user) {
-              if (globalThis.NOW.user.userID) {
-                return String(globalThis.NOW.user.userID);
-              }
-            }
-          }
-
-          return '';
-        }
-
-        var currentUserId = resolveCurrentUserId();
+        var currentUserId = '';
+        var appSession = {
+          app_user_sys_id: '',
+          sys_user_sys_id: '',
+          username: '',
+          email: '',
+          display_name: ''
+        };
 
         var stateLabel = {
           '1': 'Active',
@@ -280,6 +359,158 @@
           if (el) {
             el.textContent = text;
           }
+        }
+
+        function setHidden(id, hidden) {
+          var el = byId(id);
+          if (!el) {
+            return;
+          }
+
+          if (hidden) {
+            el.classList.add('hidden');
+          } else {
+            el.classList.remove('hidden');
+          }
+        }
+
+        function setDisabled(id, disabled) {
+          var el = byId(id);
+          if (el) {
+            el.disabled = disabled;
+          }
+        }
+
+        function hasAppSession() {
+          if (!appSession) {
+            return false;
+          }
+
+          if (!appSession.sys_user_sys_id) {
+            return false;
+          }
+
+          if (!appSession.app_user_sys_id) {
+            return false;
+          }
+
+          return true;
+        }
+
+        function loadAppSession() {
+          var raw = '';
+          try {
+            raw = localStorage.getItem(APP_SESSION_KEY) || '';
+          } catch (error_) {
+            raw = '';
+            setMsg('auth-msg', 'Session storage is unavailable in this browser.');
+          }
+
+          if (!raw) {
+            return;
+          }
+
+          try {
+            var parsed = JSON.parse(raw);
+            if (!parsed) {
+              return;
+            }
+
+            appSession = {
+              app_user_sys_id: String(parsed.app_user_sys_id || ''),
+              sys_user_sys_id: String(parsed.sys_user_sys_id || ''),
+              username: String(parsed.username || ''),
+              email: String(parsed.email || ''),
+              display_name: String(parsed.display_name || '')
+            };
+
+            currentUserId = appSession.sys_user_sys_id;
+          } catch (error_) {
+            currentUserId = '';
+            setMsg('auth-msg', 'Stored session is invalid. Please sign in again.');
+          }
+        }
+
+        function persistAppSession() {
+          try {
+            localStorage.setItem(APP_SESSION_KEY, JSON.stringify(appSession));
+          } catch (error_) {
+            setMsg('auth-msg', 'Unable to persist app session in this browser.');
+          }
+        }
+
+        function clearAppSession() {
+          appSession = {
+            app_user_sys_id: '',
+            sys_user_sys_id: '',
+            username: '',
+            email: '',
+            display_name: ''
+          };
+          currentUserId = '';
+
+          try {
+            localStorage.removeItem(APP_SESSION_KEY);
+          } catch (error_) {
+            setMsg('auth-msg', 'Unable to clear stored app session in this browser.');
+          }
+        }
+
+        function applyAuthState() {
+          var signedIn = hasAppSession();
+
+          setHidden('auth-switch-row', signedIn);
+          setHidden('login-form', signedIn);
+          setHidden('register-form', true);
+          setHidden('auth-logout-row', !signedIn);
+
+          setDisabled('btn-place-order', !signedIn);
+          setDisabled('btn-refresh', !signedIn);
+
+          if (signedIn) {
+            var display = appSession.display_name || appSession.username || 'User';
+            setMsg('auth-status', 'Signed in as ' + display + '.');
+            setMsg('auth-msg', '');
+          } else {
+            setMsg('auth-status', 'Sign in to continue.');
+          }
+        }
+
+        function callAuth(action, payload) {
+          if (!globalThis.GlideAjax) {
+            return Promise.reject(new Error('GlideAjax is unavailable in this page context.'));
+          }
+
+          return new Promise(function (resolve, reject) {
+            var ga = new GlideAjax('EverStockAuthAjax');
+            ga.addParam('sysparm_name', action);
+            ga.addParam('sysparm_username', payload.username || '');
+            ga.addParam('sysparm_email', payload.email || '');
+            ga.addParam('sysparm_display_name', payload.display_name || '');
+            ga.addParam('sysparm_password', payload.password || '');
+
+            ga.getXMLAnswer(function (answer) {
+              if (!answer) {
+                reject(new Error('Empty response from authentication service.'));
+                return;
+              }
+
+              var parsed = null;
+              try {
+                parsed = JSON.parse(answer);
+              } catch (error_) {
+                reject(new Error('Invalid authentication service response.'));
+                return;
+              }
+
+              if (!parsed.ok) {
+                reject(new Error(parsed.error || 'Authentication failed.'));
+                return;
+              }
+
+              resolve(parsed.data || {});
+            });
+          });
         }
 
         function toServiceNowDateTime(jsDate) {
@@ -416,6 +647,11 @@
         }
 
         function loadReminders() {
+          if (!currentUserId) {
+            renderReminders([]);
+            return Promise.resolve();
+          }
+
           var query = encodeURIComponent('sys_user=' + currentUserId + '^ORDERBYDESCsys_created_on');
           var fields = [
             'sys_id',
@@ -443,6 +679,11 @@
         }
 
         function loadNotifications() {
+          if (!currentUserId) {
+            renderNotifications([]);
+            return Promise.resolve();
+          }
+
           var query = encodeURIComponent('sys_user=' + currentUserId + '^ORDERBYDESCsys_created_on');
           var fields = ['sent_at', 'sys_created_on', 'channel', 'message'].join(',');
           var path =
@@ -489,6 +730,11 @@
             return;
           }
 
+          if (!currentUserId) {
+            setMsg('order-msg', 'Sign in first.');
+            return;
+          }
+
           btn.disabled = true;
           setMsg('order-msg', 'Creating reminder...');
 
@@ -507,12 +753,11 @@
             })
             .then(function () {
               setMsg('order-msg', 'Demo order placed. Reminder created successfully.');
+              btn.disabled = false;
               return refreshAll('Dashboard refreshed.');
             })
             .catch(function (e) {
               setMsg('order-msg', 'Failed: ' + e.message);
-            })
-            .finally(function () {
               btn.disabled = false;
             });
         }
@@ -523,8 +768,8 @@
 
         function onReminderActionClick(event) {
           var btn = event.currentTarget;
-          var action = btn.getAttribute('data-action');
-          var reminderId = btn.getAttribute('data-id');
+          var action = String((btn.dataset || {}).action || '');
+          var reminderId = String((btn.dataset || {}).id || '');
 
           if (!action || !reminderId) {
             return;
@@ -551,25 +796,145 @@
 
           actionPromise
             .then(function () {
+              btn.disabled = false;
               return refreshAll('Action completed.');
             })
             .catch(function (e) {
               setMsg('refresh-msg', 'Action failed: ' + e.message);
-            })
-            .finally(function () {
               btn.disabled = false;
             });
         }
 
         function refreshAll(message) {
+          if (!currentUserId) {
+            renderReminders([]);
+            renderNotifications([]);
+            setMsg('refresh-msg', 'Sign in to load dashboard data.');
+            return Promise.resolve();
+          }
+
           return Promise.all([loadReminders(), loadNotifications()]).then(function () {
             setMsg('refresh-msg', message || 'Loaded.');
           });
         }
 
+        function showLoginForm() {
+          setHidden('login-form', false);
+          setHidden('register-form', true);
+          setMsg('auth-msg', '');
+        }
+
+        function showRegisterForm() {
+          setHidden('login-form', true);
+          setHidden('register-form', false);
+          setMsg('auth-msg', '');
+        }
+
+        function onLoginSubmit(event) {
+          event.preventDefault();
+
+          var username = String((byId('login-username') || {}).value || '').trim();
+          var password = String((byId('login-password') || {}).value || '').trim();
+
+          if (!username || !password) {
+            setMsg('auth-msg', 'Enter username and password.');
+            return;
+          }
+
+          setMsg('auth-msg', 'Signing in...');
+          callAuth('login', {
+            username: username,
+            password: password
+          })
+            .then(function (data) {
+              appSession = {
+                app_user_sys_id: String(data.app_user_sys_id || ''),
+                sys_user_sys_id: String(data.sys_user_sys_id || ''),
+                username: String(data.username || ''),
+                email: String(data.email || ''),
+                display_name: String(data.display_name || '')
+              };
+              currentUserId = appSession.sys_user_sys_id;
+              persistAppSession();
+              applyAuthState();
+              setMsg('auth-msg', 'Login successful.');
+              setMsg('order-msg', '');
+              return refreshAll('Loaded.');
+            })
+            .catch(function (e) {
+              setMsg('auth-msg', 'Login failed: ' + e.message);
+            });
+        }
+
+        function onRegisterSubmit(event) {
+          event.preventDefault();
+
+          var username = String((byId('register-username') || {}).value || '').trim();
+          var email = String((byId('register-email') || {}).value || '').trim();
+          var displayName = String((byId('register-display') || {}).value || '').trim();
+          var password = String((byId('register-password') || {}).value || '').trim();
+          var confirm = String((byId('register-confirm') || {}).value || '').trim();
+
+          if (!username || !email || !password) {
+            setMsg('auth-msg', 'Username, email, and password are required.');
+            return;
+          }
+
+          if (password.length < 8) {
+            setMsg('auth-msg', 'Password must be at least 8 characters.');
+            return;
+          }
+
+          if (password !== confirm) {
+            setMsg('auth-msg', 'Password confirmation does not match.');
+            return;
+          }
+
+          setMsg('auth-msg', 'Creating account...');
+          callAuth('register', {
+            username: username,
+            email: email,
+            display_name: displayName,
+            password: password
+          })
+            .then(function (data) {
+              appSession = {
+                app_user_sys_id: String(data.app_user_sys_id || ''),
+                sys_user_sys_id: String(data.sys_user_sys_id || ''),
+                username: String(data.username || ''),
+                email: String(data.email || ''),
+                display_name: String(data.display_name || '')
+              };
+              currentUserId = appSession.sys_user_sys_id;
+              persistAppSession();
+              applyAuthState();
+              setMsg('auth-msg', 'Account created and signed in.');
+              setMsg('order-msg', '');
+              return refreshAll('Loaded.');
+            })
+            .catch(function (e) {
+              setMsg('auth-msg', 'Registration failed: ' + e.message);
+            });
+        }
+
+        function onLogoutClick() {
+          clearAppSession();
+          applyAuthState();
+          renderReminders([]);
+          renderNotifications([]);
+          setMsg('refresh-msg', 'Signed out.');
+          setMsg('order-msg', '');
+          setMsg('auth-msg', 'You are signed out.');
+        }
+
         function wireEvents() {
           var orderBtn = byId('btn-place-order');
           var refreshBtn = byId('btn-refresh');
+          var showLoginBtn = byId('btn-show-login');
+          var showRegisterBtn = byId('btn-show-register');
+          var logoutBtn = byId('btn-logout');
+          var loginForm = byId('login-form');
+          var registerForm = byId('register-form');
 
           if (orderBtn) {
             orderBtn.addEventListener('click', placeDemoOrder);
@@ -582,18 +947,42 @@
               });
             });
           }
+
+          if (showLoginBtn) {
+            showLoginBtn.addEventListener('click', showLoginForm);
+          }
+
+          if (showRegisterBtn) {
+            showRegisterBtn.addEventListener('click', showRegisterForm);
+          }
+
+          if (logoutBtn) {
+            logoutBtn.addEventListener('click', onLogoutClick);
+          }
+
+          if (loginForm) {
+            loginForm.addEventListener('submit', onLoginSubmit);
+          }
+
+          if (registerForm) {
+            registerForm.addEventListener('submit', onRegisterSubmit);
+          }
         }
 
         function init() {
-          if (!currentUserId) {
-            setMsg('refresh-msg', 'Unable to detect current user session.');
-            return;
-          }
-
           wireEvents();
-          refreshAll('Loaded.').catch(function (e) {
-            setMsg('refresh-msg', 'Initial load failed: ' + e.message);
-          });
+          loadAppSession();
+          applyAuthState();
+
+          if (hasAppSession()) {
+            refreshAll('Loaded.').catch(function (e) {
+              setMsg('refresh-msg', 'Initial load failed: ' + e.message);
+            });
+          } else {
+            renderReminders([]);
+            renderNotifications([]);
+            setMsg('refresh-msg', 'Sign in to load dashboard data.');
+          }
         }
 
         if (document.readyState === 'loading') {

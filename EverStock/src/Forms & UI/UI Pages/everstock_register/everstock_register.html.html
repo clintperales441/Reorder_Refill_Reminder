@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>EverStock Register</title>
+    <style>
+      :root {
+        --bg: #f3f5f7;
+        --card: #ffffff;
+        --text: #0f1720;
+        --muted: #5b6b79;
+        --line: #d8e0e8;
+        --brand: #125f4b;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        font-family: Segoe UI, Helvetica Neue, Arial, sans-serif;
+        background: radial-gradient(circle at top right, #dde8ff 0%, var(--bg) 45%), var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 460px;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 20px;
+      }
+
+      h1 {
+        margin: 0 0 6px;
+        font-size: 24px;
+      }
+
+      p {
+        margin: 0 0 16px;
+        color: var(--muted);
+      }
+
+      .field {
+        display: grid;
+        gap: 6px;
+        margin-bottom: 12px;
+      }
+
+      .field label {
+        font-size: 12px;
+        font-weight: 600;
+        color: #344657;
+      }
+
+      .field input {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 8px 10px;
+        font-size: 14px;
+      }
+
+      button {
+        border: 1px solid #0f4f3e;
+        background: var(--brand);
+        color: #fff;
+        font-weight: 600;
+        border-radius: 8px;
+        padding: 8px 12px;
+        cursor: pointer;
+      }
+
+      .msg {
+        margin-top: 10px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .link {
+        margin-top: 12px;
+      }
+
+      .link a {
+        color: var(--brand);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Create Account</h1>
+      <p>Register a dedicated EverStock account.</p>
+
+      <form id="register-form">
+        <div class="field">
+          <label for="username">Username</label>
+          <input id="username" type="text" autocomplete="username" />
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" type="email" autocomplete="email" />
+        </div>
+
+        <div class="field">
+          <label for="display-name">Display Name</label>
+          <input id="display-name" type="text" autocomplete="name" />
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" type="password" autocomplete="new-password" />
+        </div>
+
+        <div class="field">
+          <label for="confirm-password">Confirm Password</label>
+          <input id="confirm-password" type="password" autocomplete="new-password" />
+        </div>
+
+        <button type="submit">Register</button>
+      </form>
+
+      <div class="msg" id="msg"></div>
+      <div class="link"><a href="everstock_login.do">Already have an account? Login</a></div>
+    </div>
+
+    <script>
+      (function () {
+        var APP_SESSION_KEY = 'everstock_app_session';
+
+        function byId(id) {
+          return document.getElementById(id);
+        }
+
+        function setMsg(text) {
+          var el = byId('msg');
+          if (el) {
+            el.textContent = text;
+          }
+        }
+
+        function callAuth(payload) {
+          if (!globalThis.GlideAjax) {
+            return Promise.reject(new Error('GlideAjax unavailable in this context.'));
+          }
+
+          return new Promise(function (resolve, reject) {
+            var ga = new GlideAjax('EverStockAuthAjax');
+            ga.addParam('sysparm_name', 'register');
+            ga.addParam('sysparm_username', payload.username || '');
+            ga.addParam('sysparm_email', payload.email || '');
+            ga.addParam('sysparm_display_name', payload.display_name || '');
+            ga.addParam('sysparm_password', payload.password || '');
+
+            ga.getXMLAnswer(function (answer) {
+              if (!answer) {
+                reject(new Error('Empty response from authentication service.'));
+                return;
+              }
+
+              var parsed = null;
+              try {
+                parsed = JSON.parse(answer);
+              } catch (error_) {
+                reject(new Error('Invalid authentication service response.'));
+                return;
+              }
+
+              if (!parsed.ok) {
+                reject(new Error(parsed.error || 'Registration failed.'));
+                return;
+              }
+
+              resolve(parsed.data || {});
+            });
+          });
+        }
+
+        function onSubmit(event) {
+          event.preventDefault();
+
+          var username = String((byId('username') || {}).value || '').trim();
+          var email = String((byId('email') || {}).value || '').trim();
+          var displayName = String((byId('display-name') || {}).value || '').trim();
+          var password = String((byId('password') || {}).value || '').trim();
+          var confirmPassword = String((byId('confirm-password') || {}).value || '').trim();
+
+          if (!username || !email || !password) {
+            setMsg('Username, email, and password are required.');
+            return;
+          }
+
+          if (password.length < 8) {
+            setMsg('Password must be at least 8 characters.');
+            return;
+          }
+
+          if (password !== confirmPassword) {
+            setMsg('Password confirmation does not match.');
+            return;
+          }
+
+          setMsg('Registering account...');
+          callAuth({
+            username: username,
+            email: email,
+            display_name: displayName,
+            password: password
+          })
+            .then(function (session) {
+              localStorage.setItem(APP_SESSION_KEY, JSON.stringify(session));
+              window.location.href = 'reminder_dashboard.do';
+            })
+            .catch(function (error_) {
+              setMsg('Registration failed: ' + error_.message);
+            });
+        }
+
+        var form = byId('register-form');
+        if (form) {
+          form.addEventListener('submit', onSubmit);
+        }
+      })();
+    </script>
+  </body>
+</html>
