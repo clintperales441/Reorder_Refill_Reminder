@@ -14,6 +14,37 @@
 		return 'weekly';
 	}
 
+	function resolveOrderUserId(orderId) {
+		if (!orderId) {
+			return '';
+		}
+
+		var order = new GlideRecord('x_1984194_everstoc_order');
+		if (order.get(orderId)) {
+			return String(order.sys_user || '');
+		}
+
+		return '';
+	}
+
+	function getDefaultReminderDate(productId) {
+		var date = new GlideDateTime();
+		var daysToAdd = 7;
+
+		if (productId) {
+			var product = new GlideRecord('x_1984194_everstoc_product');
+			if (product.get(productId)) {
+				var configuredDays = parseInt(String(product.default_reorder_days || '0'), 10);
+				if (!isNaN(configuredDays) && configuredDays > 0) {
+					daysToAdd = configuredDays;
+				}
+			}
+		}
+
+		date.addDaysUTC(daysToAdd);
+		return date;
+	}
+
 	const reminderTable = 'x_1984194_everstoc_reminder';
 	const reminderUserField = 'sys_user';
 	const reminderProductField = 'x_1984194_everstoc_product';
@@ -21,7 +52,8 @@
 	const reminderFrequencyField = 'reminder_frequency';
 	const reminderNextDateField = 'next_reminder_date';
 
-	const userId = String(current.sys_user || gs.getUserID() || '');
+	const orderId = String(current.x_1984194_everstoc_order || current.order || '');
+	const userId = resolveOrderUserId(orderId) || String(current.sys_user || gs.getUserID() || '');
 	const productId = String(current.x_1984194_everstoc_product || current.product || '');
 
 	if (!userId || !productId) {
@@ -45,7 +77,7 @@
 	reminder[reminderUserField] = userId;
 	reminder[reminderProductField] = productId;
 	reminder[reminderFrequencyField] = getUserDefaultFrequency(userId);
-	reminder[reminderNextDateField] = new GlideDateTime();
+	reminder[reminderNextDateField] = getDefaultReminderDate(productId);
 	reminder[reminderStateField] = 1;
 	reminder.insert();
 
